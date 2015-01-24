@@ -1,6 +1,7 @@
 #!/bin/bash          
 
 
+ls
 ### Main File Location
 ##		Will have to loop through all of this
 inputLoc=testGit/sm_Tinfoil-Facebook/
@@ -8,15 +9,56 @@ inputLoc=testGit/sm_Tinfoil-Facebook/
 ### File to Search For
 searchFile=AndroidManifest.xml
 
+# main output location
+### FIX THIS - Make it automatic
+mainOutput=/Users/dxkvse/Desktop/VersionControlExtractor/
+
+rm -f $mainOutput
+mkdir -p $mainOutput
+
+
 ### Output Location
-mkdir -p Output
+#mkdir -p Output
 
 # Script location
 ##	Used to revert back to main script location after running
 MainScriptLoc=`pwd`
 
+### Database namew & location where information will be written to
+# 
+
 #############################################
 ##### Functions
+
+### Determine how many words are in a string
+howManyWordsInString() { echo $#; }
+
+
+
+### Get information about a specific commit
+getCommitInfo() {
+
+# testGit/sm_Tinfoil-Facebook//Tinfoil-for-Facebook/src/main
+
+echo $1
+#	mkdir -p $1
+	#echo $1 $2
+#	echo $2
+	
+#	pwd
+	## complains about errors, but I think it still works
+	git cherry-pick $1
+	git checkout --theirs -- AndroidManifest.xml  ### Pulls in their version of file
+	mkdir -p $mainOutput/Tinfoil-for-Facebook/$1
+	cp AndroidManifest.xml $mainOutput/Tinfoil-for-Facebook/$1
+	
+
+	## Move the ManifestFile to another location
+
+}
+
+
+
 
 
 
@@ -26,10 +68,14 @@ MainScriptLoc=`pwd`
 # Find the file location
 FileLoc=`find $inputLoc -name AndroidManifest.xml`
 
-
-
 # Log all versions of the file
 cd $(dirname $FileLoc)
+
+
+
+## Remove temp file if it exists
+##	Done here to leave it from troubleshooting after run
+rm -f temp2.txt
 
 #ManifestCommit=`git log --follow AndroidManifest.xml` 
 	#echo $ManifestCommit
@@ -39,54 +85,59 @@ cd $(dirname $FileLoc)
 ### A file and not variable is used since it is easier to parse
 git log --follow AndroidManifest.xml>>temp2.txt
 
+
+COUNTER=0
+
 # Read through the filename
 while read p; do
  
+
+
+ 	### Get the commit hashes
 	if [ "${p/commit}" != "$p" ] ; then
-	#  echo ""
-	#else
-		
+		p=${p//commit/""}
+    		### Ensure that only the commit_hash are added to array, not comments
+    		###	
+			wordcount=`howManyWordsInString $p`
+			if [ "$wordcount" -eq 1 ] ; then
+				echo ""
+				## Add item to array
+				#echo $p
+				getCommitInfo $p #$(dirname $FileLoc)
+#				exit
+				#commitArray+=($p)
+			fi
+	fi 
 
-		#wc | ${p}
-
-		#wc -l | $p
-			#  echo "was found in ${p}"
-			#echo $p
-			#echo "$p" | wc -w
-
-			# fix this
-			#wordCount=`echo "$p" | wc -w`
-			#echo $wordCount
-
-			## Check to make sure the output is not more than 2 words
-			#if [ "${wordCount}" == "2"] ; then
-			#if [ "$wordCount" == 2 ] ; then
-			#	echo $p
-
-
-			#fi
-
-			###
-			#echo $p
-			p=${p//commit/""}
-			echo $p
-	fi
-
-
-  #echo $p
-  	## Check to see if the line contains commit
-  #	if [[ "commit" =~ "$p" ]]; then
-  #  	echo "'$string' contains '$substring'";
-#	else
-#    	echo "'$string' does not contain '$substring'";
-#	fi
 done <temp2.txt
 
 
 
 
+# 785b25cdb4c69e40b048f6eccd399969631f87f6
+getCommitInfo 785b25cdb4c69e40b048f6eccd399969631f87f6
 
-#	rm temp2.txt
+
+
+
+
+
+# exit
+
+### Loop through the contents of the commit messages array
+COUNTER=0
+for item in "${commitArray[@]}"
+	do
+		# Leave in for debugging
+    	let COUNTER=COUNTER+1
+    	#echo "$COUNTER $item"
+
+    	## Cherry pick each commit
+    	#git cherry-pick $item
+
+
+
+done
 
 
 # Revert back to the main script location
