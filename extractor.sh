@@ -4,16 +4,17 @@
 ls
 ### Main File Location
 ##		Will have to loop through all of this
-inputLoc=testGit/sm_Tinfoil-Facebook/
+#inputLoc=testGit/sm_Tinfoil-Facebook/
+inputLoc=testGit/dantest/
 
 ### File to Search For
 searchFile=AndroidManifest.xml
 
 # main output location
 ### FIX THIS - Make it automatic
-mainOutput=/Users/dxkvse/Desktop/VersionControlExtractor/
+mainOutput=/Users/dxkvse/Desktop/VersionControlExtractor/mainOutput/
 
-rm -f $mainOutput
+rm -rf $mainOutput
 mkdir -p $mainOutput
 
 
@@ -38,22 +39,38 @@ howManyWordsInString() { echo $#; }
 ### Get information about a specific commit
 getCommitInfo() {
 
-# testGit/sm_Tinfoil-Facebook//Tinfoil-for-Facebook/src/main
+								# testGit/sm_Tinfoil-Facebook//Tinfoil-for-Facebook/src/main
+								#echo hi
+								#echo $1
+								#pwd
+								#	mkdir -p $1
+									#echo $1 $2
+								#	echo $2
+									
+								#	pwd
+									## complains about errors, but I think it still works
 
-echo $1
-#	mkdir -p $1
-	#echo $1 $2
-#	echo $2
-	
-#	pwd
-	## complains about errors, but I think it still works
-	git cherry-pick $1
-	git checkout --theirs -- AndroidManifest.xml  ### Pulls in their version of file
-	mkdir -p $mainOutput/Tinfoil-for-Facebook/$1
-	cp AndroidManifest.xml $mainOutput/Tinfoil-for-Facebook/$1
-	
+
+									#git cherry-pick -r $1 
+									#git checkout --theirs -- AndroidManifest.xml  ### Pulls in their version of file
+								#	git checkout --theirs -- AndroidManifest.xml  ### Pulls in their version of file
+									#mkdir -p $mainOutput/Tinfoil-for-Facebook/$1
+									#git checkout $1
+									#git merge -s ours
+									
+
+
+								#git reset --merge
+	git checkout $1 .
+	mkdir -p $mainOutput/danTest/$1
+								#cp AndroidManifest.xml $mainOutput/Tinfoil-for-Facebook/$1
+
 
 	## Move the ManifestFile to another location
+	cp AndroidManifest.xml $mainOutput/danTest/$1
+	
+
+
 
 }
 
@@ -100,7 +117,7 @@ while read p; do
     		###	
 			wordcount=`howManyWordsInString $p`
 			if [ "$wordcount" -eq 1 ] ; then
-				echo ""
+				#echo ""
 				## Add item to array
 				#echo $p
 				getCommitInfo $p #$(dirname $FileLoc)
@@ -115,7 +132,7 @@ done <temp2.txt
 
 
 # 785b25cdb4c69e40b048f6eccd399969631f87f6
-getCommitInfo 785b25cdb4c69e40b048f6eccd399969631f87f6
+#getCommitInfo 785b25cdb4c69e40b048f6eccd399969631f87f6
 
 
 
