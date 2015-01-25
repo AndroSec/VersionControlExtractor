@@ -5,7 +5,11 @@
 #inputLoc=testGit/sm_Tinfoil-Facebook/
 
 
+### NEED A WAY TO FIGURE THIS OUT
 appName=danTest
+
+
+
 inputLoc=testGit/$appName/
 
 ### File to Search For
@@ -56,15 +60,30 @@ mkdir -p $mainOutput
 howManyWordsInString() { echo $#; }
 
 
-
+### MAKE THIS TO BE ONE FUNCTION TO ADD ALL THE ITEMS FROM A "COMMIT"
 ### Get information about a specific commit
 getCommitInfo() {
 
-	git checkout $2 .
-	mkdir -p $mainOutput/$1/$2
+	appName=$1
+	commit=$2
+	Order=$3
+	appID=$4
+#   AppInfoCount=`sqlite3 $db "SELECT count(*) FROM Android_Manifest_AppInfo WHERE AppName='$appName';"`  
+	
+
+	### Add the commit info to the database
+	## First check to see if it exists, and if so then update the commit info
+	CommitCount=`sqlite3 $db "SELECT count(*) FROM Android_Manifest_commitinfo WHERE AppID='$appID';"`  
+
+
+	echo $CommitCount
+
+
+#	git checkout $2 .
+#	mkdir -p $mainOutput/$1/$2
 
 	## Move the ManifestFile to another location
-	cp AndroidManifest.xml $mainOutput/$1/$2	
+#	cp AndroidManifest.xml $mainOutput/$1/$2	
 }
 
 
@@ -80,13 +99,14 @@ getCommitInfo() {
 
 ### Add the Info to SQLiteDB
 
-		### Add the appName
+    ## Check to see if AppInfo exists & insert it if needed
 
-#sqlite3 $db "UPDATE ToolResults SET DefectCount=$defectCount WHERE ApkId=$rowid;"
-sqlite3 $db "select * from appdata;"
+    AppInfoCount=`sqlite3 $db "SELECT count(*) FROM Android_Manifest_AppInfo WHERE AppName='$appName';"`  
+	if [[ $AppInfoCount -eq 0 ]]; then
+		sqlite3 $db  "INSERT INTO Android_Manifest_AppInfo (AppName) VALUES ('$appName');"
+	fi
 
-		### Get the AppID
-
+	AppID=`sqlite3 $db "SELECT AppID FROM Android_Manifest_AppInfo WHERE AppName='$appName';"`
 
 
 
@@ -136,7 +156,7 @@ sqlite3 $db "select * from appdata;"
 						## Add the Commit Info to SQLite
 
 
-						getCommitInfo $appName $p #$(dirname $FileLoc)
+						getCommitInfo $appName $p $COUNTER $AppID #$(dirname $FileLoc)
 						#commitArray+=($p)
 					fi
 			fi 
