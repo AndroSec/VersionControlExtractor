@@ -65,25 +65,26 @@ howManyWordsInString() { echo $#; }
 getCommitInfo() {
 
 	appName=$1
-	commit=$2
-	Order=$3
+	Commit_Val=$2
+	CommitOrder=$3
 	appID=$4
-#   AppInfoCount=`sqlite3 $db "SELECT count(*) FROM Android_Manifest_AppInfo WHERE AppName='$appName';"`  
-	
 
 	### Add the commit info to the database
 	## First check to see if it exists, and if so then update the commit info
 	CommitCount=`sqlite3 $db "SELECT count(*) FROM Android_Manifest_commitinfo WHERE AppID='$appID';"`  
 
+	### Check to see if the commit information had yet been entered
+	if [[ $CommitCount -eq 0 ]]; then
+		echo "Enter Initial Commit info for: " $Commit_Val
+		sqlite3 $db "INSERT INTO Android_Manifest_commitinfo (Commit_Val, AppID, Commit_Order) VALUES ('$Commit_Val', $appID, $CommitOrder);"
 
-	echo $CommitCount
+	fi
 
-
-#	git checkout $2 .
-#	mkdir -p $mainOutput/$1/$2
+	git checkout $2 .
+	mkdir -p $mainOutput/$1/$2
 
 	## Move the ManifestFile to another location
-#	cp AndroidManifest.xml $mainOutput/$1/$2	
+	cp AndroidManifest.xml $mainOutput/$1/$2	
 }
 
 
@@ -135,7 +136,7 @@ getCommitInfo() {
 
 
 
-		COUNTER=0
+		COUNTER=1
 
 		# Read through the filename
 		while read p; do
@@ -186,6 +187,11 @@ getCommitInfo() {
 # Revert back to the main script location
 cd $MainScriptLoc
 
+
+
+
+
+### Now analyze all of the output AndroidManifestFiles to gather information from them.
 
 
 
