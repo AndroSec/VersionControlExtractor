@@ -6,11 +6,8 @@
 
 
 ### NEED A WAY TO FIGURE THIS OUT
-appName=danTest
-
-
-
-inputLoc=testGit/$appName/
+#appName=danTest
+#inputLoc=testGit/$appName/
 
 ### File to Search For
 searchFile=AndroidManifest.xml
@@ -98,11 +95,16 @@ getCommitInfo() {
 
 
 
-### Add the Info to SQLiteDB
+
+#appName=danTest
+#inputLoc=testGit/$appName/
+
+
+
 
     ## Check to see if AppInfo exists & insert it if needed
 
-    AppInfoCount=`sqlite3 $db "SELECT count(*) FROM Android_Manifest_AppInfo WHERE AppName='$appName';"`  
+     AppInfoCount=`sqlite3 $db "SELECT count(*) FROM Android_Manifest_AppInfo WHERE AppName='$appName';"`  
 	if [[ $AppInfoCount -eq 0 ]]; then
 		sqlite3 $db  "INSERT INTO Android_Manifest_AppInfo (AppName) VALUES ('$appName');"
 	fi
