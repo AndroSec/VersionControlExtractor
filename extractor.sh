@@ -27,6 +27,9 @@ rm -rf $mainOutput
 mkdir -p $mainOutput
 
 
+
+
+
 ### Output Location
 #mkdir -p Output
 
@@ -95,13 +98,45 @@ getCommitInfo() {
 
 
 
+	# Loop through all of the project files
+	projectFiles=inputGit
 
-#appName=danTest
-#inputLoc=testGit/$appName/
+	#FILES=$projectFiles/*
+	#for f in $FILES
+	#do
+
+	FILES=$(find $projectFiles -maxdepth 1 -mindepth 1 -type d)
+	for f in $FILES
+	do
+  		
+  		## Get the app Name
+		appName=${f//$projectFiles/""}
+		appName=${appName//\//""}
+  		echo $appName
 
 
 
 
+  		#echo $bas
+  	
+
+		#appName=danTest
+		#inputLoc=testGit/$appName/
+
+
+
+
+
+
+
+
+  	done
+
+
+
+
+
+exit
     ## Check to see if AppInfo exists & insert it if needed
 
      AppInfoCount=`sqlite3 $db "SELECT count(*) FROM Android_Manifest_AppInfo WHERE AppName='$appName';"`  
