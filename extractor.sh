@@ -64,10 +64,10 @@
 		CommitCount=`sqlite3 $db "SELECT count(*) FROM Android_Manifest_commitinfo WHERE AppID='$appID' and commit_val='$Commit_Val';"`  
 
 		### Check to see if the commit information had yet been entered
-		if [[ $CommitCount -eq 0 ]]; then
-			echo "Enter Initial Commit info for: " $appName "-" $Commit_Val
+#		if [[ $CommitCount -eq 0 ]]; then
+#			echo "Enter Initial Commit info for: " $appName "-" $Commit_Val
 #			sqlite3 $db "INSERT INTO Android_Manifest_commitinfo (Commit_Val, AppID, Commit_Order) VALUES ('$Commit_Val', $appID, $CommitOrder);"
-		fi
+#		fi
 
 		git checkout $2 .
 		mkdir -p $mainOutput/$1/$2
@@ -95,10 +95,10 @@
 	    ## Check to see if AppInfo exists & insert it if needed
 
 	    AppInfoCount=`sqlite3 $db "SELECT count(*) FROM Android_Manifest_AppInfo WHERE AppName='$appName';"`  
-		if [[ $AppInfoCount -eq 0 ]]; then
-			echo "Enter Android_Manifest_AppInfo: " $appName
+#		if [[ $AppInfoCount -eq 0 ]]; then
+#			echo "Enter Android_Manifest_AppInfo: " $appName
 #			sqlite3 $db  "INSERT INTO Android_Manifest_AppInfo (AppName) VALUES ('$appName');"
-		fi
+#		fi
 
 		AppID=`sqlite3 $db "SELECT AppID FROM Android_Manifest_AppInfo WHERE AppName='$appName';"`
 
@@ -114,10 +114,10 @@
 
 		## Remove temp file if it exists
 		##	Done here to leave it from troubleshooting after run
-		rm -f temp2.txt
+#		rm -f temp2.txt
 
 		### A file and not variable is used since it is easier to parse
-		git log --follow AndroidManifest.xml>>temp2.txt
+#		git log --follow AndroidManifest.xml>>temp2.txt
 
 		COUNTER=1
 		LineCounter=0
@@ -126,23 +126,32 @@
 			LineCounter=$[LineCounter + 1]
 		 	### Get the commit hashes
 			if [ "${p/commit}" != "$p" ] ; then
-				p=${p//commit/""}
-		    	### Ensure that only the commit_hash are added to array, not comments
-		    	###	
+				p=${p//commit/""}		
 
-		    	echo $LineCounter
-		#    	echo $p
-		 #   	exit
+				## Author Info
+				## 		Kind of an ugly way to do things, but it works
+				tempLine=$((LineCounter + 1)) 
+				AuthorInfo=`sed -n "${tempLine}p" < temp2.txt`
+				#echo $AuthorInfo
+
+				## Date info
+				tempLine=$((LineCounter + 2)) 
+				DateInfo=`sed -n "${tempLine}p" < temp2.txt`
+				#echo $DateInfo
+
+				## Message info
+				tempLine=$((LineCounter + 4)) 
+				MessageInfo=`sed -n "${tempLine}p" < temp2.txt`
+				echo $MessageInfo
+
+  				### Ensure that only the commit_hash are added to array, not comments
 				wordcount=`howManyWordsInString $p`
 				if [ "$wordcount" -eq 1 ] ; then
 
-
 					#echo $(dirname $FileLoc)
-
 					## Add the Commit Info to SQLite
 
-
-					getCommitInfo $appName $p $COUNTER $AppID #$(dirname $FileLoc)
+					getCommitInfo $appName $p $COUNTER $AppID $AuthorInfo $DateInfo $MessageInfo #$(dirname $FileLoc)
 					#commitArray+=($p)
 				fi
 			fi 
@@ -162,6 +171,7 @@
 #### Todo
 # Logging
 # Author, Date, Commit message
+# Parse the date/time information
 
 ### To check and make sure that all values are being logged properly
 
