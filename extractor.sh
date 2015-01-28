@@ -6,12 +6,16 @@
 	### File to Search For
 	searchFile=AndroidManifest.xml
 
-	# Script location
+	# Script location. Must be placed near top of script
 	MainScriptLoc=`pwd`
 
 	# main output location
 	mainOutput=$MainScriptLoc/mainOutput/
 
+	# Location of repo to scan
+	projectFiles=../repos
+
+	
 	db=$MainScriptLoc/db/AndrosecDatabase.sqlite
 
 	rm -rf $mainOutput
@@ -35,7 +39,6 @@
 	howManyWordsInString() { echo $#; }
 
 
-
 ## Just do temp
 echo "Temp - Removing all db information"
 sqlite3 $db "delete from Android_Manifest_commitinfo"	
@@ -43,10 +46,7 @@ sqlite3 $db "delete from Android_Manifest_Appinfo"
 sqlite3 $db "delete from Android_Manifest_Permission"	
 sqlite3 $db "delete from Android_Manifest_Permission_join"	
 
-
 	# Loop through all of the project files
-	projectFiles=inputGit
-
 	FILES=$(find $projectFiles -maxdepth 1 -mindepth 1 -type d)
 	for f in $FILES
 	do
@@ -173,6 +173,7 @@ sqlite3 $db "delete from Android_Manifest_Permission_join"
 #### Todo
 # Commit message should be able to handle multiple lines
 # Commit_Order is reversed
+# Total running time is off
 
 ### To check and make sure that all values are being logged properly
 
