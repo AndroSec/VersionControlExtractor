@@ -37,8 +37,12 @@ Dan-macbook:src dan$ javac dk/*.java; java -classpath ".:sqlite-jdbc-3.7.2.jar" 
 public class apkparserMain {
 	util u = new util();
 
+// THESE ITEMS NEED TO BE UPDATED FOR THE FINAL VERSION
 	final String DBLocation="";
 	final String ManifestInputLocation="testAPKfiles";
+	
+	// List of all collected manifestItems
+	private List<manifestItem>MasterManifestList=new ArrayList<manifestItem>();
 	
 	public static void main(String[] args) {
 		//System.out.println("dan");
@@ -46,6 +50,7 @@ public class apkparserMain {
 		am.Run();
 	}
 	
+	// Once things are running, clean this function up
 	public void Run(){	
 		File folder = new File(ManifestInputLocation);
 		File[] listOfFiles = folder.listFiles();
@@ -75,7 +80,7 @@ public class apkparserMain {
 			  				System.out.println("--------" + listOfFiles_app[ii].getAbsolutePath());
 			  			}else{
 			  				//System.out.println("Analze" + listOfFiles_app[ii].getName());
-			  				analyzeManifestFile(listOfFiles_app[ii].getName(), listOfFiles[i].getName(),listOfFiles_app[ii].getAbsolutePath() );
+			  				analyzeManifestFile(listOfFiles_app[ii].getName(), listOfFiles[i].getName(),listOfFiles_app[ii] );
 			  			}
 			  				
 		  					//System.out.println("*****");
@@ -86,15 +91,89 @@ public class apkparserMain {
 		    	  
 		      }
 		    }
+		    
+		    
+		    // once the list is build then cycle through it
+		    //System.out.println(MasterManifestList.size());
+		    
+		 // Loop through objects in the list
+		    /*
+		 			for (int i = 0; i < MasterManifestList.size(); i++){
+		 				System.out.println(MasterManifestList.get(i).getManifestFileName());
+		 				try {
+		 					MasterManifestList.get(i).parseXMLInfo();
+		 				} catch (ParserConfigurationException e) {
+		 					// TODO Auto-generated catch block
+		 					e.printStackTrace();
+		 				} catch (SAXException e) {
+		 					// TODO Auto-generated catch block
+		 					e.printStackTrace();
+		 				} catch (IOException e) {
+		 					// TODO Auto-generated catch block
+		 					e.printStackTrace();
+		 				} catch (InterruptedException e) {
+		 					// TODO Auto-generated catch block
+		 					e.printStackTrace();
+		 				}
+		 			}
+		    
+		    */
+		    
+		    File manifestFile = new File("/Users/dxkvse/git/Research/VersionControlExtractor/AndroidManifestParser/testAPKfiles/app1/commit1/AndroidManifest.xml");
+		    getManifestFileContents(manifestFile);
 	}
 	
-	public void analyzeManifestFile(String commitFolderName, String commitAppname, String absoluteFilePath){
+	
+	// Analyze the AndroidManifest file
+	// Information is passed in as variable even though it could be stripped out from the file object just
+	//		to make things simpler.
+	public void analyzeManifestFile(String commitFolderName, String commitAppname, File manifestFileLocation){
+		File manifestFile = new File(manifestFileLocation+"/AndroidManifest.xml");
 		
-		System.out.println("analyzemanifest file" + commitAppname);
+		// I am not sure that this will ever be reached, but it is probably a good check
+		if(!manifestFile.exists()){
+			// log this somehow
+			System.out.println("Manifest file not found");
+		}else{
+			// actually analyze the AndroidManfiest.xml file
+			
+			// create a new manifest object
+			
+			MasterManifestList.add(new manifestItem(manifestFile));
+			
+		//	apkList.add(new apkItem(f.getName(),RunAPKParser(f)));	
+			
+		}
+				
+		
+		
+		
+		
+		
+		//System.out.println("analyzemanifest file" + commitAppname);
+		//System.out.println(absoluteFilePath+"/AndroidManifest.xml");
+		
+		// Make sure it is actually a Manifest file being analyzed. This is a double check
+		// Get the filename
+		
+		// File f = new File("C:\\Hello\\AnotherFolder\\The File Name.PDF");
+	//	System.out.println(f.getName());
+		
+			
+		//System.out.println(manifestFile.getName());
+		
+		// if(node.getNodeName().toString().equals("manifest")){
+		//System.out.println("here" + manifestFile.getAbsolutePath());
+		
+		
+		
+		
 		
 		
 	}
 	
-	
+	private void getManifestFileContents(File manifestFile){
+		System.out.println("Hi dan");
+	}
 
 }
