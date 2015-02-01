@@ -161,14 +161,10 @@ public class apkparserMain {
 					    	countval = rs.getInt("countval");
 					    }
 					    
-					    System.out.println("The count is:" + countval);
-					    
-					    
 					     // If none are found, then add it
 					     if(countval < 1){
 					    	// System.out.println("Insert140:" + MasterapkList.get(i).getPermissionList().get(a));
 					    	 stmt = c.createStatement();
-					    	 System.out.println("Insert 191");
 						     String sql = "INSERT INTO android_manifest_permission (permission) VALUES ('"+MasterManifestList.get(i).getPermissionList().get(a)+"' );"; 
 						     stmt.executeUpdate(sql);  
 						     c.commit();
