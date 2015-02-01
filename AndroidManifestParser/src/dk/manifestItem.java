@@ -21,8 +21,10 @@ public class manifestItem {
 
 	private String manfiestFilePath;
 	
-	public manifestItem(File manifestFile) {
+	public manifestItem(File manifestFile, String fileContents) {
 		manifestFile = manifestFile;
+		this.manifestContents = fileContents;
+		
 		// get the contents of the file
 	}
 
@@ -50,7 +52,8 @@ public class manifestItem {
 //	}
 	
 	public String getManifestFileName(){
-		return manifestFile.getName();
+		//return manifestFile.getName();
+		return "test";
 	}
 	
 	
@@ -116,14 +119,14 @@ public class manifestItem {
 		return intentList;
 	}
 
-	/*
+	
 	public void parseXMLInfo() throws ParserConfigurationException, SAXException, IOException, InterruptedException{	
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-		Document doc = docBuilder.parse(new InputSource(new StringReader(apkContents)));
+		Document doc = docBuilder.parse(new InputSource(new StringReader(manifestContents)));
 		readXMLInfo(doc.getDocumentElement());
 	}
-*/
+
 	
 	public void readXMLInfo(Node node) {
 		
