@@ -96,6 +96,11 @@ public class apkparserMain {
 	// Information is passed in as variable even though it could be stripped out from the file object just
 	//		to make things simpler.
 	public void analyzeManifestFile(String commitFolderName, String commitAppname, File manifestFileLocation) throws IOException{
+		
+		//System.out.println("1" + commitFolderName);
+		//System.out.println("2" + commitAppname);
+		//System.out.println("3" + manifestFileLocation);
+		
 		File manifestFile = new File(manifestFileLocation+"/AndroidManifest.xml");
 		
 		// I am not sure that this will ever be reached, but it is probably a good check
@@ -107,7 +112,7 @@ public class apkparserMain {
 			
 			// create a new manifest object
 			
-			MasterManifestList.add(new manifestItem(manifestFile, u.getContentsofFile(manifestFile)));
+			MasterManifestList.add(new manifestItem(manifestFile, u.getContentsofFile(manifestFile), commitFolderName, commitAppname));
 				
 			
 			
@@ -133,25 +138,18 @@ public class apkparserMain {
 			    	
 
 			    	final String sqlliteLocation = "jdbc:sqlite:"+prefix+DBLocation;
-			    	System.out.println(sqlliteLocation);
+			    	//System.out.println(sqlliteLocation);
 			    	c = DriverManager.getConnection(sqlliteLocation);
 			    	c.setAutoCommit(false);
 			    	
 			    	
 			    
 			    	for (int i = 0; i < MasterManifestList.size(); i++){
-			    		System.out.println("test yo");
-			    		System.out.println("Insert Info for:" + MasterManifestList.get(i).getManifestFileName());
-			    		
-		
 
-			    		
-			    		
-		
 									// Next add the permissions
 					// Check to see if the intent exists in the intent table, if not then add it
 					for (int a = 0; a < MasterManifestList.get(i).getPermissionList().size(); a++) {
-				
+						 
 						// Check to see if the value exists in the table, if not then add it
 						stmt = c.createStatement();
 					    ResultSet rs = stmt.executeQuery( "SELECT count(Permission) as countval FROM Android_Manifest_Permission where permission = '" + MasterManifestList.get(i).getPermissionList().get(a)  + "' ;" );
@@ -165,27 +163,40 @@ public class apkparserMain {
 					     if(countval < 1){
 					    	// System.out.println("Insert140:" + MasterapkList.get(i).getPermissionList().get(a));
 					    	 stmt = c.createStatement();
-						     String sql = "INSERT INTO android_manifest_permission (permission) VALUES ('"+MasterManifestList.get(i).getPermissionList().get(a)+"' );"; 
+//					    	 System.out.println("Insert Info for:" + MasterManifestList.get(i).getManifestFileName() + " " + MasterManifestList.get(i).getPermissionList().get(a));
+					    	 String sql = "INSERT INTO android_manifest_permission (permission) VALUES ('"+MasterManifestList.get(i).getPermissionList().get(a)+"' );"; 
 						     stmt.executeUpdate(sql);  
 						     c.commit();
 					     }
 					     stmt.close();
 					     rs.close();	
 					     
+					     
+							
+							
 					}
 				
-					/*
-					// Get the rowID
+	
+					System.out.println("Full Path:" + MasterManifestList.get(i).getCommitPath());
+					System.out.println("Full Name:" + MasterManifestList.get(i).getCommitAppName());
+					System.out.println("Full Name:" + MasterManifestList.get(i).getCommitFolderName());
+					
+					
+					// Get the rowID for the commit
 					 stmt = c.createStatement();
-				     ResultSet rs = stmt.executeQuery( "SELECT rowid  FROM apkInformation where apkid = '" + MasterManifestList.get(i).getManifestFileName()  + "' ;" );
+					 String SQLCommand =  "SELECT Commit_ID FROM Android_manifest_commitInfo where Commit_val = '" + MasterManifestList.get(i).getCommitFolderName()  + "' ;";
+				     System.out.println(SQLCommand);
+					 ResultSet rs = stmt.executeQuery(SQLCommand);
 				     
-				     int RowID=0;
+				     int Commit_ID=-1;
 				     if (rs.next()) {
-				    	 RowID=rs.getInt("rowid");
+				    	 Commit_ID=rs.getInt("Commit_ID");
 				     }
 				     stmt.close();
 				     rs.close();
-*/
+				     
+				     System.out.println("Commit_ID:" + Commit_ID);
+
 			    	}
 				 	// Add the necessary information to the join table
 				    // This could probably all be written cleaner and simpler, but I wanted to do this step by step to ensure that
@@ -344,7 +355,7 @@ public class apkparserMain {
 		
 		// Loop through objects in the list
 		for (int i = 0; i < apkList.size(); i++){
-			System.out.println(apkList.get(i).getManifestFileName());
+//			System.out.println(apkList.get(i).getManifestFileName());
 			try {
 				apkList.get(i).parseXMLInfo();
 			} catch (ParserConfigurationException e) {
