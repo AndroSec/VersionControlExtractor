@@ -3,6 +3,15 @@
 	# Author: Daniel E. Krutz
 	# Description: Extracts all versions of AndroidManifest.xml files from all supplied GIT repos.
 
+#MessageInfo=" dan "
+
+#MessageInfo=`echo $MessageInfo | sed 's/ *$//'`
+					#echo $MessageInfo
+#echo "xxx"$MessageInfo"xxx"
+
+
+
+#exit
 	### File to Search For
 	searchFile=AndroidManifest.xml
 
@@ -125,10 +134,13 @@ sqlite3 $db "delete from Android_Manifest_Permission_join"
 					## Message info
 					tempLine=$((LineCounter + 4)) 
 					MessageInfo=`sed -n "${tempLine}p" < temp2.txt`
+
+					### Remove 1st charachter (empty space) of the variable
+					MessageInfo=`echo $MessageInfo | sed 's/ *$//'`
 					#echo $MessageInfo
 
 
-					MessageInfo=${MessageInfo// /""} 
+					#MessageInfo=${MessageInfo// /""} 
 
 	  				### Ensure that only the commit_hash are added to array, not comments
 					wordcount=`howManyWordsInString $p`
@@ -140,7 +152,7 @@ sqlite3 $db "delete from Android_Manifest_Permission_join"
 						if [[ $CommitCount -eq 0 ]]; then
 							COUNTER=$[COUNTER + 1]
 							echo "***Android_Manifest_commitinfo Insert: $appName $Commit_Val " `date` >> $MainScriptLoc/$logLocation
-							echo "Enter Initial Commit info for: " $appName "-" $Commit_Val
+							echo "Enter InitAAAial Commit info for: " $appName "-" $Commit_Val
 							sqlite3 $db "INSERT INTO Android_Manifest_commitinfo (Commit_Val, AppID, Commit_Order, Author_Name, Author_Email, Commit_Date, Commit_Message) VALUES ('$Commit_Val', $AppID, $COUNTER, '$Author_Name', '$Author_Email', '$DateInfo', '$MessageInfo');"
 						fi
 
