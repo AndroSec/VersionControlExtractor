@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="org.epstudios.epmobile"
+      android:versionCode="7"
+      android:versionName="0.6">
+<uses-sdk android:minSdkVersion="8"></uses-sdk>
+
+
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+        <activity android:name=".EpMobile"
+                  android:label="@string/main_index_title">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+		<activity android:name=".About" android:label="@string/about_title"
+			android:theme="@android:style/Theme.Dialog">
+		</activity>  
+		<activity android:name=".Qtc" android:label="@string/qtc_label">
+		</activity>
+		<activity android:name=".Dofetilide" android:label="@string/dofetilide_label">
+		</activity>
+		<activity android:name=".CycleLength" android:label="@string/cycle_length_label">
+		</activity>
+		<activity android:name=".Prefs" android:label="@string/settings_title">
+		</activity>
+		<activity android:name=".HasBled" android:label="@string/hasbled_title">
+		</activity>
+		<activity android:name=".Chads" android:label="@string/chads_title">
+		</activity>
+		<activity android:name=".ChadsVasc" android:label="@string/chadsvasc_title">
+		</activity>	
+		<activity android:name=".Dabigatran" android:label="@string/dabigatran_label">
+		</activity>	
+		<activity android:name=".Warfarin" android:label="@string/warfarin_label">
+		</activity>
+		<activity android:name=".DoseTable" android:label="@string/dose_table_title">
+		</activity>
+		<activity android:name=".Brugada" android:label="@string/brugada_vt_title">
+		</activity>
+		<activity android:name=".WctAlgorithmList" android:label="@string/wct_algorithm_title">
+		</activity>
+		<activity android:name=".WctMorphologyCriteria" android:label="@string/morphology_label">
+		</activity>
+		<activity android:name=".Rwpt" android:label="@string/rwpt_title">
+		</activity>
+		<activity android:name=".BrugadaMorphologyCriteria" android:label="@string/morphology_label">
+		</activity>
+		<activity android:name=".NormalEpValues" android:label="@string/normal_ep_values_title">
+		</activity>
+		<activity android:name=".Arvc" android:label="@string/arvc_title">
+		</activity>
+    </application>
+</manifest>

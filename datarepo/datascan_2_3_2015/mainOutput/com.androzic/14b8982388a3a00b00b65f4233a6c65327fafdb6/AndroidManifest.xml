@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Androzic - android navigation client that uses OziExplorer maps (ozf2, ozfx3).
+   Copyright (C) 2010-2013  Andrey Novikov <http://andreynovikov.info/>
+  
+   This file is part of Androzic application.
+  
+   Androzic is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   Androzic is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with Androzic.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.androzic"
+    android:installLocation="auto"
+    android:versionCode="86"
+    android:versionName="1.7.2" >
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="11" />
+
+    <uses-feature
+        android:name="android.hardware.location"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.network"
+        android:required="false" />
+
+    <permission
+        android:name="com.androzic.permission.RECEIVE_LOCATION"
+        android:description="@string/perm_location_description"
+        android:icon="@drawable/icon"
+        android:label="@string/perm_location_title"
+        android:protectionLevel="dangerous" />
+    <permission
+        android:name="com.androzic.permission.RECEIVE_TRACK"
+        android:description="@string/perm_tracking_description"
+        android:icon="@drawable/icon"
+        android:label="@string/perm_tracking_title"
+        android:protectionLevel="dangerous" />
+    <permission
+        android:name="com.androzic.permission.NAVIGATION"
+        android:description="@string/perm_navigation_description"
+        android:icon="@drawable/icon"
+        android:label="@string/perm_navigation_title"
+        android:protectionLevel="dangerous" />
+    <permission
+        android:name="com.androzic.permission.READ_PREFERENCES"
+        android:label="@string/perm_read_preferences_title"
+        android:protectionLevel="dangerous" />
+    <permission
+        android:name="com.androzic.permission.READ_MAP_DATA"
+        android:label="@string/perm_read_map_data_title"
+        android:protectionLevel="dangerous" />
+    <permission
+        android:name="com.androzic.permission.WRITE_MAP_DATA"
+        android:label="@string/perm_write_map_data_title"
+        android:protectionLevel="dangerous" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.androzic.permission.RECEIVE_LOCATION" />
+    <uses-permission android:name="com.androzic.permission.RECEIVE_TRACK" />
+
+    <application
+        android:name=".Androzic"
+        android:allowBackup="true"
+        android:backupAgent="Backup"
+        android:description="@string/homepage"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:restoreAnyVersion="true"
+        android:theme="@style/BlackTheme" >
+        <activity
+            android:name=".Splash"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchableActivity" />
+        </activity>
+        <activity
+            android:name=".ExternalActions"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.androzic.PLOT_ROUTE" />
+                <action android:name="com.google.android.radar.SHOW_RADAR" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SearchableActivity"
+            android:exported="true"
+            android:label="@string/search_name"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name=".HSIActivity"
+            android:label="@string/hsi_name" />
+        <activity
+            android:name=".Information"
+            android:label="@string/information_name"
+            android:theme="@style/BlackDialog" />
+        <activity
+            android:name=".Credits"
+            android:label="@string/credits_name" />
+        <activity
+            android:name=".Preferences"
+            android:label="@string/pref_name" />
+        <activity android:name=".Preferences$PluginsPreferences" />
+        <activity android:name=".Preferences$InnerPreferences" />
+        <activity android:name=".Preferences$OnlineMapPreferences" />
+        <activity android:name=".Preferences$ApplicationPreferences" />
+        <activity
+            android:name=".PreferencesHC"
+            android:label="@string/pref_name" />
+        <activity
+            android:name=".MapList"
+            android:label="@string/maplist_name"
+            android:theme="@style/BlackDialog" />
+        <activity
+            android:name=".ErrorDialog"
+            android:theme="@style/BlackDialog" />
+        <activity
+            android:name=".map.MapInformation"
+            android:label="@string/mapinformation_name" />
+        <activity
+            android:name=".waypoint.WaypointList"
+            android:label="@string/managewaypoints_name" />
+        <activity
+            android:name=".waypoint.WaypointProperties"
+            android:label="@string/waypointproperties_name" />
+        <activity
+            android:name=".ui.MarkerPickerActivity"
+            android:exported="true"
+            android:label="@string/markericon_name"
+            android:theme="@style/BlackDialog" >
+            <intent-filter>
+                <action android:name="com.androzic.PICK_ICON" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".waypoint.WaypointInfo"
+            android:theme="@style/BlackDialog" />
+        <activity
+            android:name=".waypoint.WaypointProject"
+            android:label="@string/waypointproject_name"
+            android:theme="@style/BlackDialog" />
+        <activity
+            android:name=".waypoint.WaypointFileList"
+            android:label="@string/loadwaypoints_name"
+            android:theme="@style/BlackDialog" />
+        <activity
+            android:name=".waypoint.CoordinatesReceived"
+            android:label="@string/coordinates_name"
+            android:theme="@style/BlackDialog" />
+        <activity
+            android:name=".track.TrackList"
+            android:label="@string/managetracks_name" />
+        <activity
+            android:name=".track.TrackProperties"
+            android:label="@string/trackproperties_name" />
+        <activity
+            android:name=".track.TrackFileList"
+            android:label="@string/loadtrack_name"
+            android:theme="@style/BlackDialog" />
+        <activity
+            android:name=".track.TrackToRoute"
+            android:label="@string/track2route_name" />
+        <activity
+            android:name=".track.TrackSave"
+            android:label="@string/savetrack_name"
+            android:theme="@style/BlackDialog" />
+        <activity
+            android:name=".route.RouteFileList"
+            android:label="@string/loadroute_name" />
+        <activity
+            android:name=".route.RouteStart"
+            android:theme="@style/BlackDialog" />
+        <activity
+            android:name=".route.RouteList"
+            android:label="@string/manageroutes_name" />
+        <activity
+            android:name=".route.RouteEdit"
+            android:theme="@style/BlackDialog" />
+        <activity
+            android:name=".route.RouteSave"
+            android:label="@string/saveroute_name"
+            android:theme="@style/BlackDialog" />
+        <activity
+            android:name=".route.RouteProperties"
+            android:label="@string/routeproperties_name" />
+        <activity
+            android:name=".route.RouteDetails"
+            android:label="@string/routedetails_name" />
+
+        <receiver
+            android:name="ActionsReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.androzic.COORDINATES_RECEIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.androzic.CENTER_ON_COORDINATES" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".LocationWidget"
+            android:icon="@drawable/icon"
+            android:label="@string/widget_name" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/location_widget" />
+        </receiver>
+
+        <provider
+            android:name=".provider.PreferencesProvider"
+            android:authorities="com.androzic.PreferencesProvider"
+            android:exported="true"
+            android:readPermission="com.androzic.permission.READ_PREFERENCES" />
+        <provider
+            android:name=".provider.DataProvider"
+            android:authorities="com.androzic.DataProvider"
+            android:exported="true"
+            android:readPermission="com.androzic.permission.READ_MAP_DATA"
+            android:writePermission="com.androzic.permission.WRITE_MAP_DATA" />
+        <provider
+            android:name=".provider.SuggestionProvider"
+            android:authorities="com.androzic.SuggestionProvider"
+            android:exported="false" />
+
+        <service
+            android:name=".track.TrackingService"
+            android:exported="true"
+            android:icon="@drawable/icon"
+            android:permission="com.androzic.permission.RECEIVE_TRACK" >
+            <intent-filter>
+                <action android:name="com.androzic.tracking" />
+                <action android:name="com.androzic.track.ITrackingRemoteService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".location.LocationService"
+            android:exported="true"
+            android:icon="@drawable/icon"
+            android:permission="com.androzic.permission.RECEIVE_LOCATION" >
+            <intent-filter>
+                <action android:name="com.androzic.location" />
+                <action android:name="com.androzic.location.ILocationRemoteService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".navigation.NavigationService"
+            android:exported="true"
+            android:icon="@drawable/icon"
+            android:permission="com.androzic.permission.NAVIGATION" >
+            <intent-filter>
+                <action android:name="com.androzic.navigation" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".WidgetService"
+            android:icon="@drawable/widget_icon"
+            android:process=":widget" />
+
+        <meta-data
+            android:name="com.google.android.backup.api_key"
+            android:value="AEdPqrEAAAAIQMCPbh1CGZy5QovaZA_o6cJgv-SaYlYVxGQ5MQ" />
+    </application>
+
+</manifest>

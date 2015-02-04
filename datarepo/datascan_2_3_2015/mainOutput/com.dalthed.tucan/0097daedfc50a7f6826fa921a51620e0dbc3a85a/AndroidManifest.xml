@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dalthed.tucan"
+    android:versionCode="21"
+    android:versionName="0.1.5_1" >
+
+    <uses-sdk android:minSdkVersion="4" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:name="com.dalthed.tucan.TucanMobile" android:debuggable="false">
+        <activity
+            android:label="@string/app_name"
+            android:name=".TuCanMobileActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" 
+            android:configChanges="keyboardHidden|orientation">
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="mainmenu"
+            android:name=".ui.MainMenu"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+			android:configChanges="keyboardHidden|orientation"
+			android:screenOrientation="portrait">
+        </activity>
+
+        <!-- Vorlesungsverzeichnis -->
+        <activity
+            android:label="Vorlesungsverzeichnis"
+            android:name=".ui.VV"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation" >
+        </activity>
+        <activity
+            android:label="Vorlesungen"
+            android:name=".ui.VV_Events"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation" >
+        </activity>
+
+        <!-- Veranstaltungen -->
+        <activity android:label="Veranstaltungen"
+            android:name=".ui.Events"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation"></activity>
+        
+        <activity android:label="Veranstaltung"
+            android:name=".ui.SingleEvent"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation"></activity>
+        
+         <activity android:label="Veranstaltung"
+            android:name=".ui.FragmentSingleEvent"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation"></activity>
+        
+        <activity android:label="Veranstaltungsanmeldung"
+            android:name=".ui.ApplyEvent"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation"></activity>
+            
+        <!-- Prüfungen -->
+
+        <activity
+            android:label="Prüfungen"
+            android:name=".ui.Exams"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation" >
+        </activity>
+        
+        <!-- Stundenplan -->
+
+        <activity
+            android:label="Stundenplan"
+            android:name=".ui.Schedule"
+            android:theme="@android:style/Theme.Light.NoTitleBar" 
+            android:configChanges="keyboardHidden|orientation">
+        </activity>
+
+        <!-- Nachrichten -->
+        <activity
+            android:label="Nachrichten"
+            android:name=".ui.Messages"
+            android:theme="@android:style/Theme.Light.NoTitleBar" 
+            
+            android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:label="Nachricht"
+            android:name=".ui.SingleMessage"
+            android:theme="@android:style/Theme.Light.NoTitleBar" 
+            android:configChanges="keyboardHidden|orientation">
+        </activity>
+
+        <!-- Einstellungen -->
+        <activity
+            android:label="Sicherheitseinstellungen"
+            android:name=".preferences.MainPreferences" 
+             >
+        </activity>
+    </application>
+
+</manifest>

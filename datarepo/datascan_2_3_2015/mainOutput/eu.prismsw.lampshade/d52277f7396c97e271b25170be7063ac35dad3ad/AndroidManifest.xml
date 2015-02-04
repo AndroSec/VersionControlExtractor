@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="eu.prismsw.lampshade"
+    android:versionCode="112"
+    android:versionName="1.1.2" >
+
+    <uses-sdk android:minSdkVersion="7" 
+        android:targetSdkVersion="14"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:icon="@drawable/lampshade"
+        android:name=".TropesApplication"
+        android:label="@string/app_name"
+        android:hardwareAccelerated="true"
+        android:theme="@style/Theme.Sherlock.Light">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ArticleActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="http" android:host="www.tvtropes.org" android:pathPattern="/pmwiki/pmwiki.php/.*" />
+				<data android:scheme="http" android:host="tvtropes.org" android:pathPattern="/pmwiki/pmwiki.php/.*" />
+			</intent-filter>
+        </activity>
+        <activity android:name=".SavedArticlesActivity">
+        </activity>
+        <activity android:name=".AboutActivity">
+        </activity>
+        <activity android:name=".HelpActivity">
+        </activity>
+        <activity android:name=".SearchActivity">
+        </activity>
+        <activity android:name=".RecentArticlesActivity">
+        </activity>
+        <activity android:name=".LampshadePreferenceActivity">
+        </activity>
+    </application>
+
+</manifest>

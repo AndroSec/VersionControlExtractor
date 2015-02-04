@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gh4a"
+    android:versionCode="1"
+    android:versionName="1.0">
+    <application
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/DefaultTheme"
+        android:name="com.gh4a.Gh4Application">
+        <activity
+            android:name=".Github4AndroidActivity">
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.MAIN" />
+                <category
+                    android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SearchActivity" android:configChanges="orientation"/>
+        <activity
+            android:name=".DashboardActivity" />
+        <activity
+            android:name=".RepositoryListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".RepositoryActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".UserListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".UserActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".UserPublicActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".UserPrivateActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".CommitListActivity" android:configChanges="orientation"/>
+        <activity
+            android:name=".CommitActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".WatcherListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".ForkListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".FollowerFollowingListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".PublicRepoListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".WatchedRepoListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".IssueListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".IssueActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".DiffViewerActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".BranchListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".TagListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".PullRequestListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".PullRequestActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".FileManagerActivity" android:configChanges="orientation"/>
+        <activity
+            android:name=".FileViewerActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".AddedFileViewerActivity" android:configChanges="orientation"/>
+        <activity
+            android:name=".OrganizationMemberListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".ContributorListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".CollaboratorListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".IssueCreateActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".IssueEditActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".IssueLabelListActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".IssueListByLabelActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".CompareActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".CommitHistoryActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".UserYourActionsActivity" android:configChanges="orientation" />
+        <activity
+            android:name=".AppPreferenceActivity"
+            android:theme="@android:style/Theme"/>
+        <activity
+            android:name="com.markupartist.android.widget.ActionBar" />
+    </application>
+    <uses-sdk
+        android:targetSdkVersion="10"
+        android:minSdkVersion="3" />
+    <uses-permission
+        android:name="android.permission.INTERNET" />
+</manifest>

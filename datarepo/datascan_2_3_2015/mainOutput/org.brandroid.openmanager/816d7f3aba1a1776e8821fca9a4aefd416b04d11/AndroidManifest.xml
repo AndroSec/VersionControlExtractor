@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+	Open Manager For Tablets, an open source file manager for the Android system
+    Copyright (C) 2011  Joe Berria <nexesdevelopment@gmail.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="org.brandroid.openmanager" android:versionName=".131"
+	android:versionCode="131">
+
+	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="12" />
+
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+	<uses-permission android:name="android.permission.READ_LOGS" />
+	<uses-permission android:name="com.android.vending.BILLING" />
+
+	<uses-feature android:name="android.hardware.bluetooth" android:required="false" />
+	<uses-feature android:name="android.hardware.faketouch" android:required="false" />
+	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+	<uses-feature android:name="android.hardware.usb.accessory" android:required="false" />
+
+	<application android:icon="@drawable/icon" android:label="@string/app_name"
+	    android:hardwareAccelerated="true" android:debuggable="false">
+
+		<activity android:name=".activities.OpenExplorer" android:label="@string/app_name"
+		    android:configChanges="screenSize|keyboard|keyboardHidden"
+		    >
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+			</intent-filter>
+			<intent-filter>
+			    <action android:name="android.intent.action.SEARCH" />
+			</intent-filter>
+			<meta-data android:name="android.app.searchable"
+			    android:resource="@xml/searchable" />
+		</activity>
+		
+		<activity android:name=".activities.UsbActivityUsbActivity" android:label="@string/app_name" android:launchMode="singleInstance">
+			<intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+            <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/device_filter" />
+		</activity>
+		
+		<!-- activity android:name=".APKDecompiler" android:label="Decompile APK" android:icon="@drawable/apk">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="content" />
+				<data android:scheme="file" />
+				<data android:mimeType="application/vnd.android.package-archive" />
+			</intent-filter>
+		</activity -->
+
+		<activity android:name=".activities.SettingsActivity" android:label="Preferences" />
+
+		<activity android:name=".activities.BluetoothActivity" android:label="Bluetooth"
+			android:theme="@android:style/Theme.Dialog" />
+		
+		<activity android:name=".activities.ServerActivity" android:label="Servers"
+		    android:theme="@android:style/Theme.Dialog" />
+		
+		<activity android:name=".activities.SplashActivity"
+		    android:theme="@android:style/Theme.Dialog" />
+		
+		<service android:name="org.brandroid.billing.BillingService" />
+
+		<receiver android:name="org.brandroid.billing.BillingReceiver">
+			<intent-filter>
+				<action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
+			    <action android:name="com.android.vending.billing.RESPONSE_CODE" />
+			    <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
+			</intent-filter>
+		</receiver>
+
+	</application>
+</manifest>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.ivanvolosyuk.sharetobrowser"
+      android:versionName="1.5" android:versionCode="7">
+    <application android:icon="@drawable/icon"
+                 android:label="Send to Computer"
+                 android:backupAgent=".BackupHelper"
+                 android:restoreAnyVersion="true"
+                 android:killAfterRestore="true"
+                 android:allowBackup="true">
+        <meta-data android:name="com.google.android.backup.api_key"
+                   android:value="AEdPqrEAAAAI-JePNLYhJ4q5uLhHdmFKD0ROHvbEeDNCUW6e8A" />
+        
+        
+        <service android:name=".Sender"/>
+        <activity android:name=".SenderDetails"
+                  android:label="Send to Computer" />
+
+        <activity android:name=".Share"
+                  android:label="Send to Computer"
+                  android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/*"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".HelpPage"
+                  android:label="Send to Computer">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="Associate"
+                  android:label="Send to Computer">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="http"
+                      android:host="send-to-computer.appspot.com"
+                      android:path="/associate" />
+            </intent-filter>
+        </activity>
+        <provider android:name="com.ivanvolosyuk.sharetobrowser.UrlStore"
+          android:authorities="com.ivanvolosyuk.sharetobrowser.urls"/>
+    </application>
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-sdk android:minSdkVersion="4"></uses-sdk>
+<supports-screens android:anyDensity="true"
+                  android:resizeable="true"
+                  android:smallScreens="true"
+                  android:normalScreens="true"
+                  android:largeScreens="true"
+                  android:xlargeScreens="true"/>
+</manifest> 

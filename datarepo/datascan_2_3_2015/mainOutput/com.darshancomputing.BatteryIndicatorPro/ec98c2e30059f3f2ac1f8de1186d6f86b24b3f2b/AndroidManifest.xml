@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.darshancomputing.BatteryIndicatorPro"
+    android:sharedUserId="com.darshancomputing.BatteryIndicatorPro"
+    android:versionCode="011136"
+    android:versionName="8.0.10"
+>
+  <application
+      android:label="@string/app_full_name"
+      android:icon="@drawable/battery"
+      android:hardwareAccelerated="true"
+      android:process="com.darshancomputing.BatteryBotPro"
+  >
+    <activity
+        android:name=".BatteryInfoActivity"
+        android:label="@string/app_full_name"
+        android:stateNotNeeded="true"
+        android:launchMode="singleTask"
+    >
+      <intent-filter android:label="@string/app_launcher_name">
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
+
+    <activity
+        android:name=".SettingsActivity"
+        android:excludeFromRecents="true"
+    />
+
+    <activity
+        android:name=".AlarmsActivity"
+        android:excludeFromRecents="true"
+        android:hardwareAccelerated="false"
+    />
+
+    <activity
+        android:name=".AlarmEditActivity"
+        android:excludeFromRecents="true"
+        android:hardwareAccelerated="false"
+    />
+
+    <activity
+        android:name=".SettingsHelpActivity"
+        android:theme="@style/bi_help_theme"
+        android:stateNotNeeded="true"
+        android:excludeFromRecents="true"
+    />
+
+    <activity
+        android:name=".HelpActivity"
+        android:theme="@style/bi_help_theme"
+        android:stateNotNeeded="true"
+        android:excludeFromRecents="true"
+    />
+
+    <activity
+        android:name=".LogViewActivity"
+        android:stateNotNeeded="true"
+        android:excludeFromRecents="true"
+    />
+
+    <service
+        android:name=".BatteryInfoService"
+        android:process="com.darshancomputing.BatteryBotPro.BIS"
+        android:icon="@drawable/battery"
+    />
+
+    <receiver
+        android:name=".BootCompletedReceiver"
+        android:enabled="true"
+        android:exported="false"
+        android:process="com.darshancomputing.BatteryBotPro.BCR"
+    >
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.PACKAGE_REPLACED" />
+        <data android:scheme="package" android:path="com.darshancomputing.BatteryIndicatorPro" />
+      </intent-filter>
+    </receiver>
+  </application>
+
+  <uses-sdk
+      android:minSdkVersion="7"
+      android:targetSdkVersion="17"
+  />
+
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+  <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+
+  <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+
+  <supports-screens
+      android:smallScreens="true"
+      android:normalScreens="true"
+      android:largeScreens="true"
+      android:anyDensity="true"
+  />
+</manifest>

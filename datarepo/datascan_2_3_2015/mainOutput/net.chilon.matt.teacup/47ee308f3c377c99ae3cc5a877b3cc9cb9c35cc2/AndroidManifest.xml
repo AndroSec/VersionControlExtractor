@@ -1,0 +1,59 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.chilon.matt.musicwidget"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="10" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        
+       	<receiver android:name="MusicWidget" >
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+				<action android:name="net.chilon.matt.musicwidget.MusicWidget.PLAY_PAUSE" />
+				<action android:name="net.chilon.matt.musicwidget.MusicWidget.LAUNCH_PLAYER" />
+				<action android:name="net.chilon.matt.musicwidget.MusicWidget.JUMP_NEXT" />
+				<action android:name="net.chilon.matt.musicwidget.MusicWidget.JUMP_PREV" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider"
+		    	       android:resource="@xml/musicwidget_info" />
+		</receiver>
+		
+		<activity android:name="MusicWidgetConfiguration"
+		          android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+			</intent-filter>
+		</activity>
+		
+		<receiver android:name="MusicWidgetReceiver" >
+			<intent-filter>
+			    <action android:name="com.android.music.metachanged" />
+			    <action android:name="com.android.music.playstatechanged" />
+			    <action android:name="com.android.music.playbackcomplete" />
+			    <action android:name="com.android.music.queuechanged" />
+                <action android:name="com.htc.music.metachanged" />
+                <action android:name="fm.last.android.metachanged" />
+                <action android:name="com.sec.android.app.music.metachanged" />
+                <action android:name="com.nullsoft.winamp.metachanged" />
+                <action android:name="com.amazon.mp3.metachanged" />     
+                <action android:name="com.miui.player.metachanged" />        
+                <action android:name="com.real.IMP.metachanged" />
+                <action android:name="com.sonyericsson.music.metachanged" />
+                <action android:name="com.rdio.android.metachanged" />
+                <action android:name="com.samsung.sec.android.MusicPlayer.metachanged" />
+                <action android:name="com.andrew.apollo.metachanged" />
+			</intent-filter>
+		</receiver>
+       	
+    </application>
+    
+
+
+</manifest>

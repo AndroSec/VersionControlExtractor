@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="eu.lavarde.pmtd"
+      android:versionCode="2013091517"
+      android:versionName="2013.09.15.17">
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="18" />
+    <application android:icon="@drawable/icon" android:label="@string/app_name"
+        	android:theme="@style/CalculationTangoTheme"
+        	android:allowBackup="true">
+        <activity android:name=".TrainingRoundActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".PrefsActivity" android:theme="@android:style/Theme"></activity>
+        <activity android:name=".UsersListActivity"></activity>
+        <activity android:name=".ChallengesListActivity"></activity>
+        <activity android:name=".ChallengeRoundActivity"></activity>
+        <activity android:name=".HighscoresListActivity"></activity>
+        
+    </application>
+</manifest>
