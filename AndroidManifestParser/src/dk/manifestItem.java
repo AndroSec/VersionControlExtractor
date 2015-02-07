@@ -21,16 +21,40 @@ public class manifestItem {
 
 	private String manfiestFilePath;
 	
-	public manifestItem(File manifestFile, String fileContents) {
+	//MasterManifestList.add(new manifestItem(manifestFile, u.getContentsofFile(manifestFile), "dan", listOfFiles[i].getName()));
+		
+	
+	public manifestItem(File manifestFile, String fileContents, String AppName, String CommitName) {
 		manifestFile = manifestFile;
 		this.manifestContents = fileContents;
-		
+		appName=AppName;
+		commitName=CommitName;
+		//location=Location;
 		// get the contents of the file
 	}
 
-	private File manifestFile;
 	
+	// Store the basic attributes of the manifest file
+	private File manifestFile;
 	private String manifestContents;
+	private String appName;
+	private String commitName;
+	//private String location;
+	
+	public String getappName() {
+		return appName;
+	}
+	
+	public String getacommitName() {
+		return commitName;
+	}
+	
+	//public String getLocation() {
+	//	return location;
+	//}
+	
+	
+	// Store the data about the manifest file
 	private String versionCode;
 	private String versionName;
 	private String minsdk;
