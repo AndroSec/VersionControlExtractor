@@ -5,6 +5,21 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -28,7 +43,37 @@ public class Parser2 {
 		p2.Run();
 	}
 	
+	
+	private void tempClearDB() throws ClassNotFoundException, SQLException{
+		System.out.println(" ********** Clear the database ********** ");
+		Connection c = null;
+	    Statement stmt = null;
+	    Class.forName("org.sqlite.JDBC");
+	    String prefix = "";
+	   
+	    final String sqlliteLocation = "jdbc:sqlite:"+prefix+DBLocation;
+	    //System.out.println(sqlliteLocation);
+	    c = DriverManager.getConnection(sqlliteLocation);
+	    c.setAutoCommit(false);
+		stmt = c.createStatement();
+    	String sql = "delete from android_manifest_permission"; 
+    	System.out.println(sql);
+	    stmt.executeUpdate(sql);  
+	    c.commit();
+		
+	    sql = "delete from android_manifest_permission_join"; 
+    	System.out.println(sql);
+	    stmt.executeUpdate(sql);  
+	    c.commit();
+		
+	    
+	    
+	}
+	
 	public void Run() throws IOException, SQLException, ClassNotFoundException{	
+		
+		tempClearDB();
+		
 		File folder = new File(ManifestInputLocation);
 		File[] listOfFiles = folder.listFiles();
 
@@ -108,192 +153,97 @@ private void gatherManifestInfo() {
 
 	private void enterDataIntoDB() throws SQLException, ClassNotFoundException{
 	
+			System.out.println("enter database information");
 	
-	System.out.println("Enter database information");
-	
-	
-	for (int i = 0; i < MasterManifestList.size(); i++){
-		for (int a = 0; a < MasterManifestList.get(i).getPermissionList().size(); a++) {
-			System.out.println(MasterManifestList.get(i).getPermissionList().get(a));
 			
-		}
-	}
-	
-	
-	
-	/*
-	System.out.println("enter database information");
-	
-	
-	// Loop through all of the apkItems
-		Connection c = null;
-	    Statement stmt = null;
-//	    try {
+			
 	    	Class.forName("org.sqlite.JDBC");
 	    	String prefix = "";
 	    	if(System.getProperty("user.dir").contains("src")){
 				prefix = "../";
 			}
 	    	
-	    	
-
 	    	final String sqlliteLocation = "jdbc:sqlite:"+prefix+DBLocation;
 	    	//System.out.println(sqlliteLocation);
+	    	Connection c = null;
+			
 	    	c = DriverManager.getConnection(sqlliteLocation);
 	    	c.setAutoCommit(false);
 	    	
-	    	
-	    
 	    	for (int i = 0; i < MasterManifestList.size(); i++){
-
-							// Next add the permissions
-			// Check to see if the intent exists in the intent table, if not then add it
-			for (int a = 0; a < MasterManifestList.get(i).getPermissionList().size(); a++) {
-				 
-				// Check to see if the value exists in the table, if not then add it
-				stmt = c.createStatement();
-			    ResultSet rs = stmt.executeQuery( "SELECT count(Permission) as countval FROM Android_Manifest_Permission where permission = '" + MasterManifestList.get(i).getPermissionList().get(a)  + "' ;" );
-			    
-			    int countval = 0;
-			    if (rs.next()) {
-			    	countval = rs.getInt("countval");
-			    }
-			    
-			     // If none are found, then add it
-			     if(countval < 1){
-			    	// System.out.println("Insert140:" + MasterapkList.get(i).getPermissionList().get(a));
-			    	 stmt = c.createStatement();
-//			    	 System.out.println("Insert Info for:" + MasterManifestList.get(i).getManifestFileName() + " " + MasterManifestList.get(i).getPermissionList().get(a));
-			    	 String sql = "INSERT INTO android_manifest_permission (permission) VALUES ('"+MasterManifestList.get(i).getPermissionList().get(a)+"' );"; 
-				     stmt.executeUpdate(sql);  
-				     c.commit();
+	    		
+	    	// Loop through all of the apkItems
+				Statement stmt = null;
+				
+				// Get the rowID for the commit
+				 stmt = c.createStatement();
+				 String SQLCommand =  "SELECT Commit_ID FROM Android_manifest_commitInfo where Commit_val = '" + MasterManifestList.get(i).getacommitName()  + "' ;";
+			     System.out.println(SQLCommand);
+				 ResultSet rs = stmt.executeQuery(SQLCommand);
+			     
+			     int Commit_ID=-1;
+			     if (rs.next()) {
+			    	 Commit_ID=rs.getInt("Commit_ID");
 			     }
 			     stmt.close();
-			     rs.close();	
+			     rs.close();
 			     
-			     
-					
-					
-			}
+			     System.out.println("Commit_ID:" + Commit_ID);
+			    
 		
 
-			System.out.println("Full Path:" + MasterManifestList.get(i).getCommitPath());
-			System.out.println("Full Name:" + MasterManifestList.get(i).getCommitAppName());
-			System.out.println("Full Name:" + MasterManifestList.get(i).getCommitFolderName());
+							// Next add the permissions
+	    		// Check to see if the intent exists in the intent table, if not then add it
+	    		for (int a = 0; a < MasterManifestList.get(i).getPermissionList().size(); a++) {
+				 
+					// Check to see if the value exists in the table, if not then add it
+					stmt = c.createStatement();
+				    rs = stmt.executeQuery( "SELECT count(Permission) as countval FROM Android_Manifest_Permission where permission = '" + MasterManifestList.get(i).getPermissionList().get(a)  + "' ;" );
+				    
+				    int countval = 0;
+				    if (rs.next()) {
+				    	countval = rs.getInt("countval");
+				    }
+				    
+				     // If none are found, then add it
+				     if(countval < 1){
+				    	// System.out.println("Insert140:" + MasterapkList.get(i).getPermissionList().get(a));
+				    	 stmt = c.createStatement();
+				    	 System.out.println("Insert Info for:" + MasterManifestList.get(i).getManifestFileName() + " " + MasterManifestList.get(i).getPermissionList().get(a));
+				    	 String sql = "INSERT INTO android_manifest_permission (permission) VALUES ('"+MasterManifestList.get(i).getPermissionList().get(a)+"' );"; 
+					     stmt.executeUpdate(sql);  
+					     c.commit();
+				     }
+				     stmt.close();
+				     rs.close();	
+				     
+				     // Add the permission information to the join table
+				     
+				     
+				     
+				     
+				          
+	    		}		
+					
+	    		////	System.out.println("Full Path:" + MasterManifestList.get(i).getManifestFile().getAbsolutePath());
+	    		//	System.out.println("Full Name:" + MasterManifestList.get(i).getappName());
+	    		//	System.out.println("Commit Name:" + MasterManifestList.get(i).getacommitName());
 			
 			
-			// Get the rowID for the commit
-			 stmt = c.createStatement();
-			 String SQLCommand =  "SELECT Commit_ID FROM Android_manifest_commitInfo where Commit_val = '" + MasterManifestList.get(i).getCommitFolderName()  + "' ;";
-		     System.out.println(SQLCommand);
-			 ResultSet rs = stmt.executeQuery(SQLCommand);
+			
+			
+			 
+		  // Add the necessary information to the join table
+			  // This could probably all be written cleaner and simpler, but I wanted to do this step by step to ensure that
+			    //		there would be no issues with information getting out of sync.
+			   
 		     
-		     int Commit_ID=-1;
-		     if (rs.next()) {
-		    	 Commit_ID=rs.getInt("Commit_ID");
-		     }
-		     stmt.close();
-		     rs.close();
 		     
-		     System.out.println("Commit_ID:" + Commit_ID);
 
 	    	}
-		 	// Add the necessary information to the join table
-		    // This could probably all be written cleaner and simpler, but I wanted to do this step by step to ensure that
-		     //		there would be no issues with information getting out of sync.
-		     
-		*/
-		/*
-			     // Permissions
-				    // For all of the intents in the array, get their intentID value to add it to the  join table
-				 	for (int x = 0; x < MasterManifestList.get(i).getPermissionList().size(); x++) {
-				 		
-					     stmt = c.createStatement();
-					     rs = stmt.executeQuery( "SELECT privID  FROM apkParser_privs where privName = '" + MasterManifestList.get(i).getPermissionList().get(x)  + "' ;" );
-					     
-					     int privID=0;
-					     if (rs.next()) {
-					    	 privID=rs.getInt("privID");
-					     }
-					     					     
-					     stmt.close();
-					     rs.close();
-					     
-					     if(privID > 0){ // Check to make sure an actual value was returned
-					    	// System.out.println(privID);
-					    	 // Make sure the combination does not exist in the linking table
-					    	 // It shouldn't, but this is just being on the safe side
-					    	 stmt = c.createStatement();
-					    	String sql="SELECT count(privID) as matchcount FROM apkparser_privs_join where privID = " + privID  + " and rowID=" + RowID +  ";";
-					    	// System.out.println(sql);
-					    	 rs = stmt.executeQuery( sql );
-						    
-					    	 //matchingCount=rs.getInt("matchcount");
-					    	 
-					    	 int matchingCount=0;
-						     if (rs.next()) {
-						    	 matchingCount=rs.getInt("matchcount");
-						     }
-						     stmt.close();
-						     rs.close();
-						     //System.out.println(matchingCount);
-						     
-						     // since it doesn't match, it should be added to the table
-						     if(matchingCount == 0){
-						    	 stmt = c.createStatement();
-							     sql = "INSERT INTO apkparser_privs_join (privID, rowID) VALUES (" + privID +","+RowID+");"; 
-							    
-							     System.out.println(sql);
-							     stmt.executeUpdate(sql);  
-							     c.commit();
-							     stmt.close();
-						     }
-						          
-						     stmt.close();
-						     rs.close();
-					     }
-					     // end of priv linking	
-		 	}
-		    	*/
-		     /*
-			// Next insert the information into the apk tools table
-			 stmt = c.createStatement();
-			String sql="SELECT count(rowID) as countrowID FROM toolResults where rowid = '" + RowID  + "' ;";
-			// System.out.println(sql);
-		     rs = stmt.executeQuery( sql );
-		   
-		     // If none are found, then add it
-		     int countrowID=0;
-		     if (rs.next()) {
-		    	 countrowID=rs.getInt("countrowID");
-		     }	     
-		     
-		     if(countrowID < 1){
-		    	 stmt = c.createStatement();
-			     sql = "INSERT INTO ToolResults (apkID) VALUES ("+RowID+" );"; 
-			     System.out.println(sql);
-			     stmt.executeUpdate(sql);  
-			     c.commit();
-		     }
-		     stmt.close();
-		     rs.close();	
-   
-		     // Now insert the basic toolresult values
-		     stmt = c.createStatement();
-		     sql = "Update toolResults set apkParser_versionCode='"+MasterManifestList.get(i).getVersionCode()+"', apkParser_VersionName='"+MasterManifestList.get(i).getVersionName()+"', apkParser_minsdk='"+ MasterManifestList.get(i).getMinsdk()+"'  , apkParser_targetsdk='"+ MasterManifestList.get(i).getTargetsdk()+"'       where rowID=" + RowID;
-		    
-		     System.out.println(sql);
-		     
-		     stmt.executeUpdate(sql);  
-		     c.commit(); 			    
-			 }
-
-
-	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	      System.exit(0);
-	    }
-*/
+		 	
+	    	
+	
 }
 
 
@@ -317,5 +267,11 @@ private void gatherManifestInfo() {
 // if(node.getNodeName().toString().equals("manifest")){
 //System.out.println("here" + manifestFile.getAbsolutePath());
 
+	
+	
+	/* Todo
+	 * 	Add intents and other information
+	 * 
+	 */
 
 }

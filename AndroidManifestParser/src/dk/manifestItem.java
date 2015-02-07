@@ -19,8 +19,6 @@ import org.w3c.dom.Node;
 
 public class manifestItem {
 
-	private String manfiestFilePath;
-	
 	//MasterManifestList.add(new manifestItem(manifestFile, u.getContentsofFile(manifestFile), "dan", listOfFiles[i].getName()));
 		
 	
@@ -40,6 +38,11 @@ public class manifestItem {
 	private String appName;
 	private String commitName;
 	//private String location;
+	
+	
+	public File getManifestFile(){
+		return manifestFile;
+	}
 	
 	public String getappName() {
 		return appName;
@@ -63,9 +66,10 @@ public class manifestItem {
 	private ArrayList<String>intentList=new ArrayList<String>(); 
 	
 	
-	public String getmanfiestFilePath() {
-		return manfiestFilePath;
-	}
+	//private String manfiestFilePath;
+	//public String getmanfiestFilePath() {
+	//	return manfiestFilePath;
+	//}
 	
 	//
 	//private String apkFileName;
