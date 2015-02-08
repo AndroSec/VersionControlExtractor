@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2012 Andy Botting <andy@andybotting.com>
+    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+     
+    This file is distributed in the hope that it will be useful, but  
+    WITHOUT ANY WARRANTY; without even the implied warranty of  
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+    General Public License for more details.  
+     
+    You should have received a copy of the GNU General Public License  
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+    
+    This file incorporates work covered by the following copyright and  
+    permission notice:
+
+    Copyright 2010 Google Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+		  package="com.andybotting.tramhunter" 
+		  android:installLocation="auto" 
+		  android:versionName="1.0-rc1" 
+		  android:versionCode="991">
+		  <!-- Keep the version code in sync with TramHunterDB -->
+	  
+	
+	<!-- Application Permissions -->
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.VIBRATE"/>	  
+
+	<!-- Require Android 2.1 for ActionBarSherlock -->
+	<uses-sdk android:minSdkVersion="7"
+		android:targetSdkVersion="15" />
+    
+	<supports-screens smallScreens="true" 
+		normalScreens="true" 
+		largeScreens="true" 
+		android:anyDensity="true" />		  
+
+	<!-- Application -->
+    <application android:name="TramHunterApplication" 
+    	android:label="@string/app_name" 
+    	android:icon="@drawable/icon" 
+    	android:theme="@style/Theme.TramHunterStyle">
+	<!-- android:theme="@style/Theme.Sherlock.Light">-->
+
+		<!-- TramHunter Activity -->
+		<activity android:name=".TramHunter"
+			android:label="@string/app_name" > 
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+
+		<!-- Home Activity -->
+		<activity android:name=".activity.HomeActivity" 
+			android:label="@string/app_name">
+		</activity>	
+
+		<!-- Routes List Activity -->
+		<activity android:name=".activity.RoutesListActivity" 
+			android:label="@string/app_name" 
+			android:configChanges="orientation|keyboardHidden"/>
+		
+		<!-- Favourite Stops List Activity -->
+		<activity android:name=".activity.FavouriteActivity" 
+			android:label="@string/app_name" 
+			android:configChanges="orientation|keyboardHidden"/>
+							  
+		<!-- Nearby Stops Activity -->
+		<activity android:name=".activity.NearStopsActivity"
+			android:label="@string/app_name" 
+			android:configChanges="orientation|keyboardHidden"/>
+		
+		<!-- Stops List Activity -->
+		<activity android:name=".activity.StopsListActivity" 
+			android:label="@string/app_name" 
+			android:configChanges="orientation|keyboardHidden"/>
+		
+		<!-- Stop Details Activity -->
+		<activity android:name=".activity.StopDetailsActivity" 
+			android:label="@string/app_name" 
+			android:configChanges="orientation|keyboardHidden"/>
+		
+		<!-- Stop Map Activity -->
+		<activity android:name=".activity.StopMapActivity" 
+			android:label="@string/app_name" 
+			android:configChanges="orientation|keyboardHidden"/>
+		
+		<!-- Settings Activity -->
+		<activity android:name=".activity.SettingsActivity" 
+			android:label="@string/app_name" 
+			android:theme="@android:style/Theme.Light"
+			android:configChanges="orientation|keyboardHidden"/>
+
+		<!-- Search Activity -->
+		<activity android:name=".activity.SearchActivity"
+            android:label="@string/description_search"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable" 
+            	android:resource="@xml/searchable" />
+        </activity>
+        
+        <!-- Network Map Activity -->
+		<activity android:name=".activity.NetworkMapActivity" 
+			android:label="@string/app_name" 
+			android:configChanges="orientation|keyboardHidden"/>		
+		
+		<!-- Provides search suggestions for stops -->
+		<provider android:name=".dao.TramHunterProvider"
+			android:authorities="com.andybotting.tramhunter"
+			android:syncable="false" />
+        
+	    <!-- declare the default searchable Activity for the whole app -->
+		<meta-data android:name="android.app.default_searchable" 
+			android:value=".activity.SearchActivity" />
+        
+<receiver android:name=".service.TramNotification">
+      <intent-filter>
+        <action android:name="intentname"></action>
+      </intent-filter>
+    </receiver>
+
+		<uses-library android:name="com.google.android.maps" />
+	</application>
+
+</manifest> 

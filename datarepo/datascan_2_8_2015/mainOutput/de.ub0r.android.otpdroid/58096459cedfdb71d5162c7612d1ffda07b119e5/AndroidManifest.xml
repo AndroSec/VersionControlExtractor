@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!--
+		Copyright (C) 2009 Felix Bechstein
+	-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	android:versionCode="154" android:versionName="1.7.1"
+	package="de.ub0r.android.otpdroid" android:installLocation="auto">
+	<application android:icon="@drawable/icon" android:label="@string/app_name"
+		android:configChanges="orientation|keyboard|keyboardHidden|fontScale"
+		android:windowSoftInputMode="adjustResize" android:debuggable="true">
+		<activity android:label="@string/app_name" android:name="OTPdroid">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".Preferences" android:label="@string/app_name" />
+	</application>
+	<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4" />
+	<supports-screens android:anyDensity="true" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+</manifest> 
