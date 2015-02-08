@@ -192,7 +192,7 @@ private void gatherManifestInfo() {
 			    
 		
 
-							// Next add the permissions
+					// Next add the permissions
 	    		// Check to see if the intent exists in the intent table, if not then add it
 	    		for (int a = 0; a < MasterManifestList.get(i).getPermissionList().size(); a++) {
 				 
@@ -217,8 +217,90 @@ private void gatherManifestInfo() {
 				     stmt.close();
 				     rs.close();	
 				     
-				     // Add the permission information to the join table
 				     
+				     // Add the permission information to the join table
+				     // Check to see if it exists
+				     
+				     // Get the Permission ID
+				  
+				 	 stmt = null;
+					
+					// Get the rowID for the Permission
+					 stmt = c.createStatement();
+					 SQLCommand =  "SELECT Permission_ID FROM android_manifest_permission where permission = '" + MasterManifestList.get(i).getPermissionList().get(a)  + "' ;";
+				     System.out.println(SQLCommand);
+					 rs = stmt.executeQuery(SQLCommand);
+				     
+				     int Permission_ID=-1;
+				     if (rs.next()) {
+				    	 Permission_ID=rs.getInt("Permission_ID");
+				     }
+				     stmt.close();
+				     rs.close();
+				     
+				     System.out.println("Permission_ID:" + Permission_ID);
+				
+				     
+				     // Check to see if Commit_ID, Permission_ID exists in the priv join table
+				     stmt = c.createStatement();
+				     String sql="SELECT count(Commit_ID) as countval FROM android_Manifest_permission_join where commit_ID = '" + Commit_ID  + "' and Permission_ID=" + Permission_ID + ";";
+				     System.out.println(sql);
+				     rs = stmt.executeQuery(sql);
+				     int privJoinCount=-1;
+				     if (rs.next()) {
+				    	 privJoinCount=rs.getInt("countval");
+				     }
+				     stmt.close();
+				     rs.close();
+				     
+				     System.out.println("privJoinCount:" + privJoinCount);
+				
+				     // If the values do not exist in the priv join table
+				     if(privJoinCount < 1){
+					    	// System.out.println("Insert140:" + MasterapkList.get(i).getPermissionList().get(a));
+					    	 stmt = c.createStatement();
+					    	 sql = "INSERT INTO android_Manifest_permission_join (Commit_ID, Permission_ID) VALUES ("+Commit_ID+"," + Permission_ID +" );"; 
+						     System.out.println(sql);
+					    	 stmt.executeUpdate(sql);  
+						     c.commit();
+					     }
+					     stmt.close();
+					     rs.close();	
+				     
+				     
+				     
+				     
+				     
+				     
+				     
+				     // Test with different manifest files
+				     
+				     
+				     
+				     
+				     /*
+				     stmt = c.createStatement();
+					 
+				    update this statement to look for the new itemss
+				     rs = stmt.executeQuery( "SELECT count(Permission) as countval FROM android_Manifest_permission_join where commitID = '" + Commit_ID  + "' and Permission_ID=" +  + ;" );
+					    
+					    countval = 0;
+					    if (rs.next()) {
+					    	countval = rs.getInt("countval");
+					    }
+					    
+					     // If none are found, then add it
+					     if(countval < 1){
+					    	// System.out.println("Insert140:" + MasterapkList.get(i).getPermissionList().get(a));
+					    	 stmt = c.createStatement();
+					    	 System.out.println("Insert Info for:" + MasterManifestList.get(i).getManifestFileName() + " " + MasterManifestList.get(i).getPermissionList().get(a));
+					    	 String sql = "INSERT INTO android_manifest_permission (permission) VALUES ('"+MasterManifestList.get(i).getPermissionList().get(a)+"' );"; 
+						     stmt.executeUpdate(sql);  
+						     c.commit();
+					     }
+					     stmt.close();
+					     rs.close();	
+			*/
 				     
 				     
 				     
