@@ -56,7 +56,9 @@ public class Parser2 {
 	    c = DriverManager.getConnection(sqlliteLocation);
 	    c.setAutoCommit(false);
 		stmt = c.createStatement();
-    	String sql = "delete from android_manifest_permission"; 
+    	
+		
+		String sql = "delete from android_manifest_permission"; 
     	System.out.println(sql);
 	    stmt.executeUpdate(sql);  
 	    c.commit();
@@ -66,7 +68,16 @@ public class Parser2 {
 	    stmt.executeUpdate(sql);  
 	    c.commit();
 		
-	    
+	    sql = "delete from android_manifest_intent"; 
+    	System.out.println(sql);
+	    stmt.executeUpdate(sql);  
+	    c.commit();
+		
+	    sql = "delete from android_manifest_intent_join"; 
+    	System.out.println(sql);
+	    stmt.executeUpdate(sql);  
+	    c.commit();
+		
 	    
 	}
 	
@@ -157,6 +168,8 @@ private void gatherManifestInfo() {
 	
 			
 			
+			
+			
 	    	Class.forName("org.sqlite.JDBC");
 	    	String prefix = "";
 	    	if(System.getProperty("user.dir").contains("src")){
@@ -169,6 +182,11 @@ private void gatherManifestInfo() {
 			
 	    	c = DriverManager.getConnection(sqlliteLocation);
 	    	c.setAutoCommit(false);
+	    	
+	    	
+	    	
+	    	// ***** Permissions *****
+	    	
 	    	
 	    	for (int i = 0; i < MasterManifestList.size(); i++){
 	    		
@@ -188,10 +206,11 @@ private void gatherManifestInfo() {
 			     stmt.close();
 			     rs.close();
 			     
+			     // Set the commit_ID for each item so it can be used later on
+			     MasterManifestList.get(i).setCommitID(Commit_ID);
+			     
 			     System.out.println("Commit_ID:" + Commit_ID);
 			    
-		
-
 					// Next add the permissions
 	    		// Check to see if the intent exists in the intent table, if not then add it
 	    		for (int a = 0; a < MasterManifestList.get(i).getPermissionList().size(); a++) {
@@ -257,7 +276,6 @@ private void gatherManifestInfo() {
 				
 				     // If the values do not exist in the priv join table
 				     if(privJoinCount < 1){
-					    	// System.out.println("Insert140:" + MasterapkList.get(i).getPermissionList().get(a));
 					    	 stmt = c.createStatement();
 					    	 sql = "INSERT INTO android_Manifest_permission_join (Commit_ID, Permission_ID) VALUES ("+Commit_ID+"," + Permission_ID +" );"; 
 						     System.out.println(sql);
@@ -266,64 +284,118 @@ private void gatherManifestInfo() {
 					     }
 					     stmt.close();
 					     rs.close();	
+       
+	    		}		
+	    	}
+		 	
+	    	
+	    	
+	    	
+	    	// ***** Intents *****
+	    	
+	    	
+	    	for (int i = 0; i < MasterManifestList.size(); i++){
+	    		
+	    	// Loop through all of the apkItems
+				Statement stmt = null;
+				
+				// Next add the permissions
+	    		// Check to see if the intent exists in the intent table, if not then add it
+	    		for (int a = 0; a < MasterManifestList.get(i).getIntentList().size(); a++) {
+				 
+					// Check to see if the value exists in the table, if not then add it
+					stmt = c.createStatement();
+					ResultSet rs = stmt.executeQuery( "SELECT count(Intent) as countval FROM Android_Manifest_intent where intent = '" + MasterManifestList.get(i).getIntentList().get(a)  + "' ;" );
+				    
+				    int countval = 0;
+				    if (rs.next()) {
+				    	countval = rs.getInt("countval");
+				    }
+				    
+				     // If none are found, then add it
+				     if(countval < 1){
+				    	// System.out.println("Insert140:" + MasterapkList.get(i).getPermissionList().get(a));
+				    	 stmt = c.createStatement();
+				    	 String sql = "INSERT INTO android_manifest_intent (intent) VALUES ('"+MasterManifestList.get(i).getIntentList().get(a)+"' );"; 
+					     System.out.println(sql);
+				    	 stmt.executeUpdate(sql);  
+					     c.commit();
+				     }
+				     stmt.close();
+				     rs.close();	
 				     
 				     
+				     // Add the permission information to the join table
+				     // Check to see if it exists
 				     
+				     // Get the Permission ID
+				  
+				 	 stmt = null;
+					
+					// Get the rowID for the Permission
+					 stmt = c.createStatement();
+					 String SQLCommand =  "SELECT intent_ID FROM android_manifest_intent where intent = '" + MasterManifestList.get(i).getIntentList().get(a)  + "' ;";
+				     System.out.println(SQLCommand);
+					 rs = stmt.executeQuery(SQLCommand);
 				     
+				     int Intent_ID=-1;
+				     if (rs.next()) {
+				    	 Intent_ID=rs.getInt("Intent_ID");
+				     }
+				     stmt.close();
+				     rs.close();
 				     
+				     System.out.println("Intent_ID:" + Intent_ID);
+				
 				     
-				     
-				     // Test with different manifest files
-				     
-				     
-				     
-				     
-				     /*
+				     // Check to see if Commit_ID, Intent_ID exists in the priv join table
 				     stmt = c.createStatement();
-					 
-				    update this statement to look for the new itemss
-				     rs = stmt.executeQuery( "SELECT count(Permission) as countval FROM android_Manifest_permission_join where commitID = '" + Commit_ID  + "' and Permission_ID=" +  + ;" );
-					    
-					    countval = 0;
-					    if (rs.next()) {
-					    	countval = rs.getInt("countval");
-					    }
-					    
-					     // If none are found, then add it
-					     if(countval < 1){
-					    	// System.out.println("Insert140:" + MasterapkList.get(i).getPermissionList().get(a));
+				     String sql="SELECT count(Commit_ID) as countval FROM android_Manifest_intent_join where commit_ID = '" + MasterManifestList.get(i).getCommit_ID()  + "' and Intent_ID=" + Intent_ID + ";";
+				     System.out.println(sql);
+				     rs = stmt.executeQuery(sql);
+				     int intentJoinCount=-1;
+				     if (rs.next()) {
+				    	 intentJoinCount=rs.getInt("countval");
+				     }
+				     stmt.close();
+				     rs.close();
+				     
+				     System.out.println("IntentJoinCount:" + intentJoinCount);
+				
+				     // If the values do not exist in the intent join table
+				     if(intentJoinCount < 1){
 					    	 stmt = c.createStatement();
-					    	 System.out.println("Insert Info for:" + MasterManifestList.get(i).getManifestFileName() + " " + MasterManifestList.get(i).getPermissionList().get(a));
-					    	 String sql = "INSERT INTO android_manifest_permission (permission) VALUES ('"+MasterManifestList.get(i).getPermissionList().get(a)+"' );"; 
-						     stmt.executeUpdate(sql);  
+					    	 sql = "INSERT INTO android_Manifest_intent_join (Commit_ID, intent_ID) VALUES ("+MasterManifestList.get(i).getCommit_ID()+"," + Intent_ID +" );"; 
+						     System.out.println(sql);
+					    	 stmt.executeUpdate(sql);  
 						     c.commit();
 					     }
 					     stmt.close();
 					     rs.close();	
-			*/
-				     
-				     
-				     
-				          
+       
 	    		}		
-					
-	    		////	System.out.println("Full Path:" + MasterManifestList.get(i).getManifestFile().getAbsolutePath());
-	    		//	System.out.println("Full Name:" + MasterManifestList.get(i).getappName());
-	    		//	System.out.println("Commit Name:" + MasterManifestList.get(i).getacommitName());
-			
-			
-			
-			
-			 
-		  // Add the necessary information to the join table
-			  // This could probably all be written cleaner and simpler, but I wanted to do this step by step to ensure that
-			    //		there would be no issues with information getting out of sync.
-			   
-		     
-		     
-
+		
 	    	}
-		 	
+			
+	    	
+	    	// Add in other information from the repo
+	    	//	Since the row information already exists, an update statement should be sufficient
+	    	for (int i = 0; i < MasterManifestList.size(); i++){
+	    		
+	    		//System.out.println("MinSDK"+MasterManifestList.get(i).getMinsdk());
+	    		//System.out.println("TargetSDK"+MasterManifestList.get(i).getTargetsdk());
+	    		//System.out.println("VersionCode"+MasterManifestList.get(i).getVersionCode());
+	    		//System.out.println("VersionName"+MasterManifestList.get(i).getVersionName());
+	    		//System.out.println("--------");
+	    		
+	    		Statement stmt = null;
+	    		stmt = c.createStatement();
+	    		String sql = "Update Android_Manifest_CommitInfo set versionCode='"+MasterManifestList.get(i).getVersionCode()+"', versionName='"+MasterManifestList.get(i).getVersionName()+"', minSDK='"+MasterManifestList.get(i).getMinsdk()+"', targetSDK='"+MasterManifestList.get(i).getTargetsdk()+"' where commit_ID = " + MasterManifestList.get(i).getCommit_ID() + ";"; 
+			    System.out.println(sql);
+			    stmt.executeUpdate(sql);  
+			    c.commit();
+	    	
+	    	}
 	    	
 	
 }
@@ -332,27 +404,9 @@ private void gatherManifestInfo() {
 
 
 
-
-
-//System.out.println("analyzemanifest file" + commitAppname);
-//System.out.println(absoluteFilePath+"/AndroidManifest.xml");
-
-// Make sure it is actually a Manifest file being analyzed. This is a double check
-// Get the filename
-
-// File f = new File("C:\\Hello\\AnotherFolder\\The File Name.PDF");
-//	System.out.println(f.getName());
-
-	
-//System.out.println(manifestFile.getName());
-
-// if(node.getNodeName().toString().equals("manifest")){
-//System.out.println("here" + manifestFile.getAbsolutePath());
-
-	
 	
 	/* Todo
-	 * 	Add intents and other information
+	 * 	Seperate intents ?
 	 * 
 	 */
 

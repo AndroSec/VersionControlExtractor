@@ -31,6 +31,7 @@ public class manifestItem {
 		// get the contents of the file
 	}
 
+	private int commit_ID;	// Commit_ID from the database
 	
 	// Store the basic attributes of the manifest file
 	private File manifestFile;
@@ -39,6 +40,14 @@ public class manifestItem {
 	private String commitName;
 	//private String location;
 	
+	
+	public int getCommit_ID(){
+		return commit_ID;
+	}
+	
+	public void setCommitID(int commit_ID) {
+		this.commit_ID = commit_ID;
+	}
 	
 	public File getManifestFile(){
 		return manifestFile;
