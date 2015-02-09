@@ -1,0 +1,3 @@
+When analyzing the files using Java, I tried breaking down the "mainOutput" folders into groups to eliminate java heap errors.
+
+Upping the heap size is also probably a good idea

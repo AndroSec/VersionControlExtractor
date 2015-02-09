@@ -31,8 +31,9 @@ public class manifestParser {
 
 	// THESE ITEMS NEED TO BE UPDATED FOR THE FINAL VERSION
 	final String DBLocation="../db/AndrosecDatabase.sqlite";
-	final String ManifestInputLocation="testAPKfiles";
-		
+//	final String ManifestInputLocation="testAPKfiles";
+	final String ManifestInputLocation="mainOutput";	
+	
 	// List of all collected manifestItems
 	private List<manifestItem>MasterManifestList=new ArrayList<manifestItem>();
 		
@@ -83,11 +84,11 @@ public class manifestParser {
 	
 	public void Run() throws IOException, SQLException, ClassNotFoundException{	
 		
-		tempClearDB();
+	//	tempClearDB(); // Only clear DB when starting a new run
 		
 		File folder = new File(ManifestInputLocation);
 		File[] listOfFiles = folder.listFiles();
-
+  
 		
 		    for (int i = 0; i < listOfFiles.length; i++) {
 		   
@@ -182,9 +183,9 @@ private void gatherManifestInfo() {
 			
 	    	c = DriverManager.getConnection(sqlliteLocation);
 	    	c.setAutoCommit(false);
+	    	 
 	    	
-	    	
-	    	
+	  	
 	    	// ***** Permissions *****
 	    	
 	    	
@@ -210,7 +211,7 @@ private void gatherManifestInfo() {
 			     MasterManifestList.get(i).setCommitID(Commit_ID);
 			     
 			     System.out.println("Commit_ID:" + Commit_ID);
-			    
+			    /*
 					// Next add the permissions
 	    		// Check to see if the intent exists in the intent table, if not then add it
 	    		for (int a = 0; a < MasterManifestList.get(i).getPermissionList().size(); a++) {
@@ -286,11 +287,12 @@ private void gatherManifestInfo() {
 					     rs.close();	
        
 	    		}		
+	    		*/
 	    	}
 		 	
 	    	
 	    	
-	    	
+	    	/*
 	    	// ***** Intents *****
 	    	
 	    	
@@ -376,7 +378,7 @@ private void gatherManifestInfo() {
 	    		}		
 		
 	    	}
-			
+			*/
 	    	
 	    	// Add in other information from the repo
 	    	//	Since the row information already exists, an update statement should be sufficient
@@ -391,7 +393,8 @@ private void gatherManifestInfo() {
 	    		Statement stmt = null;
 	    		stmt = c.createStatement();
 	    		String sql = "Update Android_Manifest_CommitInfo set versionCode='"+MasterManifestList.get(i).getVersionCode()+"', versionName='"+MasterManifestList.get(i).getVersionName()+"', minSDK='"+MasterManifestList.get(i).getMinsdk()+"', targetSDK='"+MasterManifestList.get(i).getTargetsdk()+"' where commit_ID = " + MasterManifestList.get(i).getCommit_ID() + ";"; 
-			    System.out.println(sql);
+			    
+	    		System.out.println(sql);
 			    stmt.executeUpdate(sql);  
 			    c.commit();
 	    	

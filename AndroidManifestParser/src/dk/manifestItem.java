@@ -111,7 +111,7 @@ public class manifestItem {
 	}
 
 	public String getVersionName() {
-		return versionName;
+		return versionName.replace("'", "");
 	}
 
 	public String getMinsdk() {
@@ -227,7 +227,10 @@ public class manifestItem {
 	        					for (int d = 0; d < currentNode.getChildNodes().item(b).getChildNodes().item(c).getChildNodes().getLength(); d++) {
 	        						String Name = currentNode.getChildNodes().item(b).getChildNodes().item(c).getChildNodes().item(d).getNodeName();
 	        						if(!Name.trim().equals("#text")){						
-	        							String value= currentNode.getChildNodes().item(b).getChildNodes().item(c).getChildNodes().item(d).getAttributes().item(0).getNodeValue();				    
+	        							String value= "";
+	        							if(currentNode.getChildNodes().item(b).getChildNodes().item(c).getChildNodes().item(d).getAttributes()!=null){
+	        								value= currentNode.getChildNodes().item(b).getChildNodes().item(c).getChildNodes().item(d).getAttributes().item(0).getNodeValue();				    			
+	        							}
 	        							if(value.contains("android.intent")){
 	        								AddUniqueItemToIntentList(value);
 	        							}
