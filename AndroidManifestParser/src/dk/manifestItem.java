@@ -111,8 +111,16 @@ public class manifestItem {
 	}
 
 	public String getVersionName() {
-		return versionName.replace("'", "");
+		String retVal="";
+		
+		if(versionName!=null){
+			System.out.println(versionName + " - " + versionName.replace("'", ""));
+			retVal=versionName.replace("'", "");
+		}
+		
+		return retVal;
 	}
+	
 
 	public String getMinsdk() {
 		return minsdk;

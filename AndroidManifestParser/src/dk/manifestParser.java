@@ -390,6 +390,10 @@ private void gatherManifestInfo() {
 	    		//System.out.println("VersionName"+MasterManifestList.get(i).getVersionName());
 	    		//System.out.println("--------");
 	    		
+	    		// This is just a temp fix
+	    		//if(MasterManifestList.get(i).getCommit_ID()!=7012){
+	    		
+	    		System.out.println(MasterManifestList.get(i).getCommit_ID());
 	    		Statement stmt = null;
 	    		stmt = c.createStatement();
 	    		String sql = "Update Android_Manifest_CommitInfo set versionCode='"+MasterManifestList.get(i).getVersionCode()+"', versionName='"+MasterManifestList.get(i).getVersionName()+"', minSDK='"+MasterManifestList.get(i).getMinsdk()+"', targetSDK='"+MasterManifestList.get(i).getTargetsdk()+"' where commit_ID = " + MasterManifestList.get(i).getCommit_ID() + ";"; 
@@ -397,6 +401,7 @@ private void gatherManifestInfo() {
 	    		System.out.println(sql);
 			    stmt.executeUpdate(sql);  
 			    c.commit();
+	    		//}
 	    	
 	    	}
 	    	
