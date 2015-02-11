@@ -211,7 +211,7 @@ private void gatherManifestInfo() {
 			     MasterManifestList.get(i).setCommitID(Commit_ID);
 			     
 			     System.out.println("Commit_ID:" + Commit_ID);
-			    /*
+			    
 					// Next add the permissions
 	    		// Check to see if the intent exists in the intent table, if not then add it
 	    		for (int a = 0; a < MasterManifestList.get(i).getPermissionList().size(); a++) {
@@ -287,12 +287,12 @@ private void gatherManifestInfo() {
 					     rs.close();	
        
 	    		}		
-	    		*/
+	    		
 	    	}
 		 	
 	    	
 	    	
-	    	/*
+	    	
 	    	// ***** Intents *****
 	    	
 	    	
@@ -378,7 +378,7 @@ private void gatherManifestInfo() {
 	    		}		
 		
 	    	}
-			*/
+			
 	    	
 	    	// Add in other information from the repo
 	    	//	Since the row information already exists, an update statement should be sufficient
