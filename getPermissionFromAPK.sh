@@ -12,9 +12,12 @@
 	## Convert location
 	decompile=Decompile/decompileAPK.sh
 
-	#cd $apkInputDir
-	#ls
+	## Decompile outputDir
+	decompile_output=DOutput
 
+	## Create the Decompile output Dir and remove any files if they are in it.
+	mkdir -p $decompile_output
+	rm -rf $decompile_output/*
 
 	#### Loop through each APK file
 
@@ -48,11 +51,36 @@
 		### Find the versionID based on Part 2 
 		versionID=`sqlite3 $DBName "SELECT versionID FROM version WHERE appID =$appID and build_number=$part2;"`
 
-		echo $appID
-		echo $versionID
+	#	echo $appID
+	#	echo $versionID
 
-		#### Now convert the file
-		./$decompile $appID $versionID $f
+		#### Now reverse engineer the file the file
+#		./$decompile $appID $versionID $f $decompile_output
+
+		### Analyze the output of the given dir
+		#cd tools/CustomJava/src/
+		#echo "---->Analyzing" $f
+		#javac dk/*.java; java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/apkparserMain ../../../$f
+		#cd ../../../
+
+		#cd tools/CustomJava/src/
+		cd AndroidManifestParser/src/
+		echo "---->Analyzing" $f
+		#javac dk/*.java; java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/apkparserMain ../../../$f
+		#javac dk/*.java; java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/apkparserMain ../../../$f
+		javac dk/*.java
+		java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/manifestParser_Individual Hi dan ../../../$f
+
+
+		cd ../../../
+
+
+
+
+
+
+		### Clean up everything
+#		rm -rf $decompile_output/*
 
 	done
 	
