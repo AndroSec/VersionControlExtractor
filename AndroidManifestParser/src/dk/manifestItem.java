@@ -37,7 +37,7 @@ public class manifestItem {
 	private File manifestFile;
 	private String manifestContents;
 	private String appName;
-	private String commitName;
+	private static String commitName;	// Changed for the individual manifestParser
 	//private String location;
 	
 	
@@ -57,7 +57,7 @@ public class manifestItem {
 		return appName;
 	}
 	
-	public String getacommitName() {
+	public static String getacommitName() {
 		return commitName;
 	}
 	

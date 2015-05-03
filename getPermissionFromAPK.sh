@@ -51,10 +51,11 @@
 		### Find the versionID based on Part 2 
 		versionID=`sqlite3 $DBName "SELECT versionID FROM version WHERE appID =$appID and build_number=$part2;"`
 
-	#	echo $appID
-	#	echo $versionID
+		#echo $appID
+		#echo $part2
+		#echo $versionID
 
-		#### Now reverse engineer the file the file
+		#### Now reverse engineer the file
 #		./$decompile $appID $versionID $f $decompile_output
 
 		### Analyze the output of the given dir
@@ -70,9 +71,13 @@
 		#javac dk/*.java; java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/apkparserMain ../../../$f
 		javac dk/*.java
 		java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/manifestParser_Individual Hi dan ../../../$f
+		#java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/manifestParser_Individual $DBName $decompile_output ../../../$f
+
+		#java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/manifestParser_Individual #$DBName $decompile_output 1 2
 
 
-		cd ../../../
+
+#		cd ../../../
 
 
 
