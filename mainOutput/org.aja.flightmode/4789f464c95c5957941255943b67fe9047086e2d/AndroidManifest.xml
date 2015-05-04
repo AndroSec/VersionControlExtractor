@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest 
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      package="org.aja.flightmode"
+      android:versionCode="3"
+      android:versionName="1.2">
+      
+<!-- 
+Only supporting up until version 16, because on 17 and above the app will need
+to be installed as a system app. Non-root users will not have that option.
+
+On 17 and above this app will need WRITE_SECURE_SETTINGS permission in order to
+be able to change the flight mode setting.  
+-->
+
+<uses-sdk 
+      android:minSdkVersion="4" 
+      android:targetSdkVersion="16"
+      android:maxSdkVersion="16" />
+
+<uses-permission 
+      android:name="android.permission.WRITE_SETTINGS" />
+    
+<application 
+      android:icon="@drawable/ic_flightmode_on"
+      android:label="@string/app_name"
+      android:theme="@style/AppTheme"
+      android:allowBackup="true" >
+
+      <receiver android:name="FlightmodeAppWidgetProvider">
+         <meta-data 
+             android:name="android.appwidget.provider"
+             android:resource="@xml/appwidget_info" />
+         <intent-filter>
+             <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+             <action android:name="org.aja.flightmode.ACTION_TOGGLE_REQUEST" />
+             <action android:name="android.intent.action.AIRPLANE_MODE" />
+         </intent-filter>
+      </receiver>
+        
+</application>
+
+</manifest>

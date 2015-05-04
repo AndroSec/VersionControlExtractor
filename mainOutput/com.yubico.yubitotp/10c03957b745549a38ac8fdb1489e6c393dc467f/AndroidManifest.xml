@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yubico.yubitotp"
+    android:versionCode="7"
+    android:versionName="0.0.4-SNAPSHOT" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".TotpActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="sensor">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".TotpWidgetConfigure"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".TotpGenerator"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:name=".TotpWidgetActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <receiver
+            android:name=".TotpWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/yubitotp_widget_info"/>
+        </receiver>
+    </application>
+
+</manifest>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.seafile.seadroid2"
+      android:versionCode="23"
+      android:versionName="1.2.0">
+
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <application
+        android:allowBackup="true"
+        android:name="com.seafile.seadroid2.SeadroidApplication"
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher">
+
+        <activity android:name="com.seafile.seadroid2.AccountsActivity"
+                  android:launchMode="singleTop"
+            	  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.SeafileTheme"
+                  android:label="@string/app_name">
+        </activity>
+
+        <activity android:name="com.seafile.seadroid2.ui.UploadTasksActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.SeafileTheme"
+                  android:label="@string/app_name">
+        </activity>
+        
+        <activity android:name="com.seafile.seadroid2.ui.SettingsActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.SeafileTheme"
+                  android:label="@string/app_name">
+        </activity>
+        
+        <activity android:name="com.seafile.seadroid2.ui.GestureLockActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.SeafileTheme"
+                  android:label="@string/app_name">
+        </activity>
+        
+        <activity android:name="com.seafile.seadroid2.ui.GestureLockSetupActivity"
+            	  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.SeafileTheme"
+                  android:label="@string/app_name">
+        </activity>
+
+        <activity android:name="com.seafile.seadroid2.BrowserActivity"
+            	  android:screenOrientation="portrait"
+                  android:label="@string/app_name"
+                  android:theme="@style/Theme.SeafileTheme"
+                  android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.seafile.seadroid2.MarkdownActivity"
+                  android:theme="@style/Theme.SeafileTheme"
+                  android:label="@string/app_name">
+        </activity>
+
+        <activity android:name="com.seafile.seadroid2.AccountDetailActivity"
+                  android:theme="@style/Theme.SeafileTheme"
+                  android:parentActivityName=".AccountsActivity"
+                  android:label="@string/app_name">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".AccountsActivity" />
+
+        </activity>
+
+        <!-- MultipleImageSelectionActivity uses the default theme, instead of
+             ActionBarSherlock -->
+        <activity android:name="com.seafile.seadroid2.gallery.MultipleImageSelectionActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@android:style/Theme"
+                  android:label="@string/app_name">
+        </activity>
+
+        <activity android:name="com.seafile.seadroid2.ShareToSeafileActivity"
+                  android:theme="@style/Theme.SeafileTheme"
+                  android:excludeFromRecents="true"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.seafile.seadroid2.ui.SeafilePathChooserActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.SeafileTheme"
+                  android:label="@string/app_name">
+        </activity>
+
+        <activity android:name="com.seafile.seadroid2.FileActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.SeafileTheme"
+                  android:label="@string/app_name">
+        </activity>
+
+        <activity android:name="com.seafile.seadroid2.fileschooser.MultiFileChooserActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.SeafileTheme"
+                  android:label="@string/app_name">
+        </activity>
+		<service android:name="com.seafile.seadroid2.transfer.TransferService" > </service>
+        <service android:name="com.seafile.seadroid2.monitor.FileMonitorService" > </service>
+        <service android:name="com.seafile.seadroid2.sync.CameraUploadService" > </service>
+      </application>
+</manifest>

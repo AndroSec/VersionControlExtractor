@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2011 Joakim Andersson
+ * Copyright (C) 2013 blunden
+ * 
+ * This file is part of PactrackDroid, an Android application to keep
+ * track of parcels sent with the Swedish mail service (Posten).
+ * 
+ * PactrackDroid is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * PactrackDroid is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="nu.firetech.android.pactrack" android:versionName="1.4.1" android:versionCode="1410">
+	
+	<application 
+	    android:icon="@drawable/icon"
+	    android:label="@string/app_name"
+	    android:description="@string/app_description" 
+	    android:theme="@style/AppTheme" 
+	    android:allowBackup="true" >
+
+		<activity 
+		    android:label="@string/app_name"
+		    android:name=".frontend.MainWindow"
+            android:hardwareAccelerated="true" >
+		    
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity 
+		    android:label="@string/app_name"
+		    android:name=".frontend.ParcelView"
+		    android:hardwareAccelerated="true" 
+		    android:parentActivityName=".frontend.MainWindow" >
+    		<!-- Parent activity meta-data to support API level 4+ -->
+    		<meta-data
+        		android:name="android.support.PARENT_ACTIVITY"
+        		android:value=".frontend.MainWindow" />
+		</activity>
+    	<activity
+		    android:label="@string/app_name"
+		    android:name=".frontend.ConfigView"
+            android:hardwareAccelerated="true"
+            android:parentActivityName=".frontend.MainWindow" >
+    		<!-- Parent activity meta-data to support API level 4+ -->
+    		<meta-data
+        		android:name="android.support.PARENT_ACTIVITY"
+        		android:value=".frontend.MainWindow" />
+		</activity>
+		<receiver android:name=".backend.ServiceStarter">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+				<category android:name="android.intent.category.HOME" />
+				<action android:name="android.net.conn.BACKGROUND_DATA_SETTING_CHANGED" />
+			</intent-filter>
+		</receiver>
+		<service android:name=".backend.ParcelService"/>
+		
+        <service android:name=".backend.LiveViewService"
+				 android:label="LiveView plugin service">
+			<intent-filter>
+				<action android:name="nu.firetech.android.pactrack.backend.liveviewservice"/>
+				<category android:name="android.intent.category.LAUNCHER"/>
+				<action android:name="nu.firetech.android.pactrack.backend.liveviewannounce"/>
+        	</intent-filter>
+		</service>
+        <activity android:name="com.sonyericsson.extras.liveview.plugins.PluginPreferences" 
+				  android:label="LiveView plugin preferences">
+			<intent-filter>
+				<action android:name="nu.firetech.android.pactrack.liveview.PREFERENCES"></action> 	
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+        </activity>
+	    <receiver android:name="com.sonyericsson.extras.liveview.plugins.PluginReceiver">
+			<intent-filter>
+				<action android:name="com.sonyericsson.extras.liveview.LAUNCH_PLUGIN" />
+			</intent-filter>
+	    </receiver>
+	</application>
+
+	<uses-sdk android:minSdkVersion="11" android:targetSdkVersion="18"/>
+	<supports-screens android:largeScreens="true" android:normalScreens="true"
+		android:smallScreens="true" />
+
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="com.sonyericsson.extras.liveview.permission.LIVEVIEW_API" />
+</manifest> 

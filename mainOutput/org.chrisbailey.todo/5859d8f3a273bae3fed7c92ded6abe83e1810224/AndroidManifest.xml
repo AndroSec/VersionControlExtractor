@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.chrisbailey.todo"
+    android:versionCode="7"
+    android:versionName="1.5"
+    android:installLocation="internalOnly">
+
+    <supports-screens android:smallScreens="true"
+                      android:normalScreens="true"
+                      android:largeScreens="true"/>
+
+    <uses-sdk android:minSdkVersion="3" />
+    
+    <uses-permission android:name="android.permission.CHANGE_COMPONENT_ENABLED_STATE" />
+    <uses-permission android:name="android.permission.BIND_APPWIDGET" />
+    
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+
+      <activity android:name="ToDoActivity" 
+            android:label="@string/app_name" 
+            android:theme="@android:style/Theme.Dialog"/>
+      
+      <activity android:name="PreferencesActivity" android:label="@string/app_name"/>
+
+      <receiver android:name="ToDoWidgetProvider" android:label="@string/app_name_2x2">
+          <intent-filter>
+              <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+              <action android:name="android.appwidget.action.ACTION_APPWIDGET_DELETED" />
+          </intent-filter>
+          <meta-data android:name="android.appwidget.provider"
+                     android:resource="@xml/todowidget2x2" />
+      </receiver>
+
+      <receiver android:name="MediumToDoWidget" android:label="@string/app_name_2x3">
+          <intent-filter>
+              <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+              <action android:name="android.appwidget.action.ACTION_APPWIDGET_DELETED" />
+          </intent-filter>
+          <meta-data android:name="android.appwidget.provider"
+                     android:resource="@xml/todowidget2x3" />
+      </receiver>
+      
+      <receiver android:name="LargeToDoWidget" android:label="@string/app_name_2x4">
+          <intent-filter>
+              <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+              <action android:name="android.appwidget.action.ACTION_APPWIDGET_DELETED" />
+          </intent-filter>
+          <meta-data android:name="android.appwidget.provider"
+                     android:resource="@xml/todowidget2x4" />
+      </receiver>
+
+      <receiver android:name="SquareToDoWidget" android:label="@string/app_name_3x3">
+      <!-- 
+          <intent-filter>
+              <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+              <action android:name="android.appwidget.action.ACTION_APPWIDGET_DELETED" />
+          </intent-filter>
+-->
+          <meta-data android:name="android.appwidget.provider"
+                     android:resource="@xml/todowidget3x3" />
+      </receiver>
+        <activity android:name=".config.WidgetConfiguration"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+    </application>
+    
+</manifest> 

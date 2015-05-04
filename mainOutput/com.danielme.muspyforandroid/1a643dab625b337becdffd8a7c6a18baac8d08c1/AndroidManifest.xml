@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright (C) 2012 Daniel Medina <http://danielme.com>
+ * 
+ * This file is part of "Muspy for Android".
+ * 
+ * "Muspy for Android" is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * "Muspy for Android" is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with this program.  If not, see <http://www.gnu.org/licenses/gpl-3.0.html/>
+ */
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.danielme.muspyforandroid"
+    android:versionCode="2"
+    android:versionName="1.1" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="10" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />	
+   
+    <application
+        android:name="MuspyApplication"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Muspy">
+        
+        <service android:name=".WidgetService"></service> 
+        
+        <!-- Homescreen widget -->
+    	<receiver android:name="WidgetProvider" android:exported="false">
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <!-- custom intent (refresh button) -->
+            <intent-filter>
+    			<action android:name="com.danielme.muspyforandroid.UPDATE_WIDGET"/>
+			</intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/muspywidget" />
+        </receiver>
+
+        <!-- label of main activity is shown below icon -->
+        <activity
+            android:name=".activities.SignInActivity"
+            android:label="@string/app_name_icon" 
+            android:configChanges="keyboardHidden|orientation">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.ReleasesActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name_releases" >
+        </activity>
+        <activity
+            android:name=".activities.ReleaseActivity"
+            android:label="@string/app_name_release" >
+        </activity>
+        <activity
+            android:name=".activities.WebBrowserActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name_release" >
+        </activity>
+        <activity
+            android:name=".activities.MyArtistsActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name_artists" >
+        </activity>
+        <activity
+            android:name=".activities.SearchArtistsActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name_search" >
+        </activity>
+        <activity
+            android:name=".activities.ReleasesActivityFromSearch"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name_releases" >
+        </activity>
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/app_name_settings" >
+        </activity>
+        <activity
+            android:name=".activities.ResetPasswordActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name_reset" >
+        </activity>
+        <activity
+            android:name=".activities.SignUpActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name_signup" >
+        </activity>
+        <activity
+            android:name=".activities.AboutActivity"
+            android:label="@string/app_name_about" >
+        </activity>
+        <activity
+            android:name=".activities.AppSettingsActivity"
+            android:label="@string/app_name_preferences"
+            android:theme="@style/MuspyTitleBar" >
+        </activity>
+        <activity
+            android:name=".activities.ImportLastfmActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name_importlastfm" >
+        </activity>
+    </application>
+
+</manifest>
