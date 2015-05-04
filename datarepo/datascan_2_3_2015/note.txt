@@ -1,3 +1,0 @@
-This just contains information from the preliminary scan of repos to pull out the manifest files from the different versions.
-
-The DB location and "mainOutput" files location will obviously need to be changed.

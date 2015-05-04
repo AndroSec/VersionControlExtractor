@@ -1,0 +1,13 @@
+version: 1.5.2
+apkFileName: apps.babycaretimer_5.apk
+isFrameworkApk: false
+usesFramework:
+  ids:
+  - 1
+sdkInfo:
+  minSdkVersion: '8'
+  targetSdkVersion: '8'
+packageInfo:
+  cur_package: apps.babycaretimer
+  orig_package: apps.babycaretimer
+compressionType: false

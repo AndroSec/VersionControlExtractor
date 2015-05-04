@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="app_theme_options">
+        <item>@string/baby_boy_blue</item>
+        <item>@string/baby_girl_pink</item>
+    </string-array>
+    <string-array name="app_theme_options_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="alarm_max_hours_options">
+        <item>@string/s1_hour_text</item>
+        <item>@string/s2_hours_text</item>
+        <item>@string/s3_hours_text</item>
+        <item>@string/s4_hours_text</item>
+        <item>@string/s5_hours_text</item>
+        <item>@string/s6_hours_text</item>
+        <item>@string/s7_hours_text</item>
+        <item>@string/s8_hours_text</item>
+        <item>@string/s9_hours_text</item>
+        <item>@string/s10_hours_text</item>
+        <item>@string/s11_hours_text</item>
+        <item>@string/s12_hours_text</item>
+        <item>@string/s24_hours_text</item>
+        <item>@string/s48_hours_text</item>
+        <item>@string/s72_hours_text</item>
+        <item>@string/s96_hours_text</item>
+    </string-array>
+    <string-array name="alarm_max_hours_options_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>24</item>
+        <item>48</item>
+        <item>72</item>
+        <item>96</item>
+    </string-array>
+    <string-array name="dim_screen_background_amount_options">
+        <item>0</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="dim_screen_background_amount_options_values">
+        <item>0</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="screen_timeout_options">
+        <item>@string/s10_seconds_text</item>
+        <item>@string/s15_seconds_text</item>
+        <item>@string/s20_seconds_text</item>
+        <item>@string/s25_seconds_text</item>
+        <item>@string/s30_seconds_text</item>
+        <item>@string/s45_seconds_text</item>
+        <item>@string/s1_minute_text</item>
+        <item>@string/s2_minutes_text</item>
+        <item>@string/s3_minutes_text</item>
+        <item>@string/s4_minutes_text</item>
+        <item>@string/s5_minutes_text</item>
+        <item>@string/s10_minutes_text</item>
+        <item>@string/s15_minutes_text</item>
+        <item>@string/s30_minutes_text</item>
+    </string-array>
+    <string-array name="screen_timeout_options_values">
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+        <item>120</item>
+        <item>180</item>
+        <item>240</item>
+        <item>300</item>
+        <item>600</item>
+        <item>9000</item>
+        <item>1800</item>
+    </string-array>
+    <string-array name="snooze_amount_options">
+        <item>@string/s5_minutes_text</item>
+        <item>@string/s10_minutes_text</item>
+        <item>@string/s15_minutes_text</item>
+        <item>@string/s20_minutes_text</item>
+        <item>@string/s25_minutes_text</item>
+        <item>@string/s30_minutes_text</item>
+    </string-array>
+    <string-array name="snooze_amount_options_values">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+    </string-array>
+    <string-array name="preference_vibrate_pattern_options">
+        <item>@string/multiple_short_text</item>
+        <item>@string/multiple_long_text</item>
+        <item>@string/custom_text</item>
+    </string-array>
+    <string-array name="preference_vibrate_pattern_options_values">
+        <item>0,300,100,300,100,300,100</item>
+        <item>0,800,200,800,200,800,200</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="preference_led_pattern_options">
+        <item>@string/fast_text</item>
+        <item>@string/normal_text</item>
+        <item>@string/slow_text</item>
+        <item>@string/custom_text</item>
+    </string-array>
+    <string-array name="preference_led_pattern_options_values">
+        <item>300,300</item>
+        <item>1000,1000</item>
+        <item>3000,3000</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="preference_led_color_options">
+        <item>@string/red_text</item>
+        <item>@string/blue_text</item>
+        <item>@string/green_text</item>
+        <item>@string/cyan_text</item>
+        <item>@string/magenta_text</item>
+        <item>@string/yellow_text</item>
+        <item>@string/custom_text</item>
+    </string-array>
+    <string-array name="preference_led_color_options_values">
+        <item>red</item>
+        <item>blue</item>
+        <item>green</item>
+        <item>cyan</item>
+        <item>magenta</item>
+        <item>yellow</item>
+        <item>custom</item>
+    </string-array>
+    <string-array name="vibrate_setting_options">
+        <item>@string/always_text</item>
+        <item>@string/never_text</item>
+        <item>@string/only_when_in_vibrate_mode_text</item>
+    </string-array>
+    <string-array name="vibrate_setting_options_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>

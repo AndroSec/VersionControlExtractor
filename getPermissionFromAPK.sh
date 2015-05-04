@@ -1,19 +1,28 @@
 #!/bin/bash    
 
 ### Description
-##		Get the permission information from each APK file
+##		Get the permission information from each APK file.
+##		This is designed to be used with 'normal' .apk files.
+##		This will not completely decompile the apk file.
 
 	## Location of APkFiles files
 	apkInputDir=../apks_small/
 
 	## DB location
-	DBName=db/AndrosecDatabase.sqlite
+	#DBName=db/AndrosecDatabase.sqlite
+	### FIX THIS
+	DBName=/Users/dxkvse/git/Research/VersionControlExtractor/db/AndrosecDatabase.sqlite
+
 
 	## Convert location
 	decompile=Decompile/decompileAPK.sh
 
 	## Decompile outputDir
-	decompile_output=DOutput
+	#decompile_output=DOutput
+
+	## FIX THIS
+	decompile_output=/Users/dxkvse/git/Research/VersionControlExtractor/DOutput/
+
 
 	## Create the Decompile output Dir and remove any files if they are in it.
 	mkdir -p $decompile_output
@@ -21,25 +30,12 @@
 
 	#### Loop through each APK file
 
-	## Find the AppID, VersionID from the database
-	##		Create function to do this
-
-	## If found, unzip the file and decompile the contents
-	##		Create external function to do this
-
-	## Find the manifest file and analyze the contents of it
-	
-
-	#$$$$$$$$$
 	FILES=$(find $apkInputDir -maxdepth 1 -type f  -name '*.apk')
 	for f in $FILES
 	do
 		filename=$(basename "$f")
 
-
-		#echo $filename | awk -F'_' '{print $1,$2}'
-
-		#### There is a cleaner way to to do this
+		#### There must be a cleaner way to to do this
 		part1=`echo $filename | awk -F'_' '{print $1}'`
 		part2=`echo $filename | awk -F'_' '{print $2}'`
 		part2=${part2//.apk/""}
@@ -55,26 +51,26 @@
 		#echo $part2
 		#echo $versionID
 
-		#### Now reverse engineer the file
-#		./$decompile $appID $versionID $f $decompile_output
+		#### Now reverse enginer the file
+		./$decompile $appID $versionID $f $decompile_output
 
-		### Analyze the output of the given dir
-		#cd tools/CustomJava/src/
-		#echo "---->Analyzing" $f
-		#javac dk/*.java; java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/apkparserMain ../../../$f
-		#cd ../../../
-
-		#cd tools/CustomJava/src/
 		cd AndroidManifestParser/src/
 		echo "---->Analyzing" $f
-		#javac dk/*.java; java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/apkparserMain ../../../$f
-		#javac dk/*.java; java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/apkparserMain ../../../$f
-		javac dk/*.java
-		java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/manifestParser_Individual Hi dan ../../../$f
-		#java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/manifestParser_Individual $DBName $decompile_output ../../../$f
+		
 
-		#java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/manifestParser_Individual #$DBName $decompile_output 1 2
+		###	 These show the expected input to the Java portion of the app
+		#String DBLocation = args[0].toString();
+		#String ManifestInputLocation = args[1].toString();
+		#int appID = Integer.parseInt(args[2]);
+		#int versionID = Integer.parseInt(args[3]);
 
+		#javac dk/*.java;
+		#java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/manifestParser_Individual DB Manifest 1 2
+		
+
+		#### javac dk/*.java; java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/apkparserMain ../../../$f
+
+		javac dk/*.java; java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/manifestParser_Individual $DBName $decompile_output $appID $versionID
 
 
 #		cd ../../../

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest android:versionCode="5" android:versionName="1.4" android:installLocation="auto" package="apps.babycaretimer"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <supports-screens android:anyDensity="true" android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" />
+    <application android:label="@string/app_name_formatted" android:icon="@drawable/ic_launcher_babycaretimer_blue" android:debuggable="true">
+        <activity android:label="@string/app_name_formatted" android:icon="@drawable/ic_launcher_babycaretimer_blue" android:name="apps.babycaretimer.TimerActivity" android:taskAffinity="apps.babycaretimer" android:launchMode="singleTask" android:screenOrientation="user">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity-alias android:label="@string/app_name_formatted" android:icon="@drawable/ic_launcher_babycaretimer_pink" android:name="TimerActivity_Pink" android:launchMode="singleTask" android:targetActivity="apps.babycaretimer.TimerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity android:theme="@style/Theme.Transparent" android:name="apps.babycaretimer.AlarmActivity" android:taskAffinity="apps.babycaretimer.alarm" android:launchMode="standard" android:screenOrientation="user" />
+        <activity android:theme="@style/Theme.Transparent" android:name="apps.babycaretimer.SetAlarmActivity" android:taskAffinity="apps.babycaretimer.setalarm" android:launchMode="singleTask" android:screenOrientation="user" />
+        <activity android:label="@string/app_name_formatted" android:name="apps.babycaretimer.preferences.MainPreferenceActivity" android:taskAffinity="apps.babycaretimer" android:screenOrientation="user">
+            <intent-filter>
+                <category android:name="android.intent.category.PREFERENCE" />
+            </intent-filter>
+        </activity>
+        <service android:name="apps.babycaretimer.services.AlarmBroadcastReceiverService" />
+        <service android:name="apps.babycaretimer.services.AlarmNotificationContentIntentService" />
+        <service android:name="apps.babycaretimer.services.AlarmNotificationDeleteIntentService" />
+        <service android:name="apps.babycaretimer.services.AlarmReceiverService" />
+        <service android:name="apps.babycaretimer.services.OnBootBroadcastReceiverService" />
+        <service android:name="apps.babycaretimer.services.ScreenManagementAlarmBroadcastReceiverService" />
+        <receiver android:name="apps.babycaretimer.receivers.AlarmReceiver" android:exported="true" />
+        <receiver android:name="apps.babycaretimer.receivers.OnBootReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="apps.babycaretimer.receivers.ScreenManagementAlarmReceiver" android:exported="true" />
+    </application>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+</manifest>

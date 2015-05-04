@@ -45,31 +45,40 @@ public class manifestParser_Individual {
 	
 		
 		// Make it so these are checked for
-	//	String DBLocation = args[0].toString();
-	//	String ManifestInputLocation = args[1].toString();
-		//	int appID = args[2];
-		//	int versionID = args[3];
 
 
 	//	int appID = 777;
 	//	int versionID = 5;
 
+		// Just in here as a placeholder
+		String DBLocation ="";
+		String ManifestInputLocation ="";
+		int appID = -1;
+		int versionID = -1;
 		
-		/*
-		String DBLocation = args[0].toString();
-		String ManifestInputLocation = args[1].toString();
-		int appID = Integer.parseInt(args[2]);
-		int versionID = Integer.parseInt(args[3]);
+		
+		
+		
+		// Should make it so these are checked for
+		DBLocation = args[0].toString();
+		ManifestInputLocation = args[1].toString();
+		appID = Integer.parseInt(args[2]);
+		versionID = Integer.parseInt(args[3]);
 
+		/*
+		DBLocation = "/Users/dxkvse/git/Research/VersionControlExtractor/db/AndrosecDatabase.sqlite";
+		ManifestInputLocation = "/Users/dxkvse/git/Research/VersionControlExtractor/DOutput/";
+		appID = 777;
+		versionID = 2872;
+		*/
 		
+
 		System.out.println(DBLocation);
 		System.out.println(ManifestInputLocation);
 		System.out.println(appID);
 		System.out.println(versionID);
-*/
 		
-		
-		System.exit(0);
+//		System.exit(0);
 		
 		
 		
@@ -102,7 +111,7 @@ public class manifestParser_Individual {
 		
 	}
 	
-	
+	/*
 	private void tempClearDB(String DBLocation) throws ClassNotFoundException, SQLException{
 		System.out.println(" ********** Clear the database ********** ");
 		Connection c = null;
@@ -139,7 +148,7 @@ public class manifestParser_Individual {
 		
 	    
 	}
-	
+	*/
 	public void Run(String DBLocation, String ManifestInputLocation, int appID, int versionID) throws IOException, SQLException, ClassNotFoundException, ParserConfigurationException, SAXException, InterruptedException{	
 		
 //		tempClearDB(); // Only clear DB when starting a new run
@@ -176,12 +185,13 @@ public class manifestParser_Individual {
 		
 		// Set up the necessary database connection information
 	   	Class.forName("org.sqlite.JDBC");
-    	String prefix = "";
-    	if(System.getProperty("user.dir").contains("src")){
-			prefix = "../";
-		}
+    //	String prefix = "";
+    //	if(System.getProperty("user.dir").contains("src")){
+	//		prefix = "../";
+	//	}
     	
-    	final String sqlliteLocation = "jdbc:sqlite:"+prefix+DBLocation;
+    	//final String sqlliteLocation = "jdbc:sqlite:"+prefix+DBLocation;
+	   	final String sqlliteLocation = "jdbc:sqlite:"+DBLocation;
     	//System.out.println(sqlliteLocation);
     	Connection c = null;
 		
@@ -190,10 +200,8 @@ public class manifestParser_Individual {
 
 		// Loop through all the permissions
     	
-    	
     	for (int a = 0; a < ManItem.getPermissionList().size(); a++) {
 			 
-  
     		Statement stmt = null;
     		stmt = c.createStatement();
 			String sql="SELECT count(Name) as countval FROM Permission where name = '" + ManItem.getPermissionList().get(a)  + "' ;";

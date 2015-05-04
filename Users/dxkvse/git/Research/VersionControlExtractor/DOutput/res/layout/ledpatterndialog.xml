@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="10.0dip" android:text="@string/preference_led_pattern_dialog" />
+        <TableLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip">
+            <TableRow>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/preference_led_pattern_on" />
+                <EditText android:id="@id/ledPatternOnEditText" android:layout_width="100.0dip" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:lines="1" android:selectAllOnFocus="true" android:maxLength="5" android:numeric="integer" android:inputType="number" android:imeOptions="actionDone" />
+            </TableRow>
+            <TableRow>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/preference_led_pattern_off" />
+                <EditText android:id="@id/ledPatternOffEditText" android:layout_width="100.0dip" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:lines="1" android:selectAllOnFocus="true" android:maxLength="5" android:numeric="integer" android:inputType="number" android:imeOptions="actionDone" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</ScrollView>
