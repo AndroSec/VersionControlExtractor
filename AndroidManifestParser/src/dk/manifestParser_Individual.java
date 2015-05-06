@@ -174,7 +174,7 @@ public class manifestParser_Individual {
 		//	MasterManifestList.add(new manifestItem(manifestFile, u.getContentsofFile(manifestFile), listOfFiles[i].getName(), listOfFiles_app[ii].getName()));
 		//	System.out.println(u.getContentsofFile(manifestFile));
 		
-		
+	//	System.exit(0);
 		// Analyze the manifest file
 			
 		// Create the Manifest file object
@@ -204,7 +204,7 @@ public class manifestParser_Individual {
 			 
     		Statement stmt = null;
     		stmt = c.createStatement();
-			String sql="SELECT count(Name) as countval FROM Permission where name = '" + ManItem.getPermissionList().get(a)  + "' ;";
+			String sql="SELECT count(Name) as countval FROM Permission_version where name = '" + ManItem.getPermissionList().get(a)  + "' ;";
 			System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 		    
@@ -213,6 +213,10 @@ public class manifestParser_Individual {
 		    	countval = rs.getInt("countval");
 		    }
     		
+		    
+		    
+		   // System.out.println("Count" + countval);
+		  //  System.exit(0);
     		//System.out.println(countval);
     		
     		  // If none are found, then add it
@@ -220,18 +224,23 @@ public class manifestParser_Individual {
 		    	// System.out.println("Insert140:" + MasterapkList.get(i).getPermissionList().get(a));
 		    	 stmt = c.createStatement();
 		    	 System.out.println("Insert Info for:" + ManItem.getManifestFileName() + " " + ManItem.getPermissionList().get(a));
-		    	 sql = "INSERT INTO permission (Name) VALUES ('"+ManItem.getPermissionList().get(a)+"' );"; 
-			     stmt.executeUpdate(sql);  
+		    	 sql = "INSERT INTO Permission_version (Name) VALUES ('"+ManItem.getPermissionList().get(a)+"' );"; 
+			   
+		    	 System.out.println(sql);
+		    	// System.exit(0);
+		    	  
+		    	 stmt.executeUpdate(sql);  
 			     c.commit();
 		     }
 		     stmt.close();
 		     rs.close();	
 		    
+		   
 		     
 		     // Get the permissionID
 		 	// Get the rowID for the Permission
 			 stmt = c.createStatement();
-			 sql =  "SELECT PermissionID FROM permission where name = '" + ManItem.getPermissionList().get(a)  + "' ;";
+			 sql =  "SELECT PermissionID FROM Permission_version where name = '" + ManItem.getPermissionList().get(a)  + "' ;";
 		     System.out.println(sql);
 			 rs = stmt.executeQuery(sql);
 		     

@@ -6,7 +6,7 @@
 ##		This will not completely decompile the apk file.
 
 	## Location of APkFiles files
-	apkInputDir=../apks_small/
+	apkInputDir=../apks/
 
 	## DB location
 	#DBName=db/AndrosecDatabase.sqlite
@@ -43,7 +43,6 @@
 		### Now get the information from the database
 		appID=`sqlite3 $DBName "SELECT appID FROM appdata WHERE name='$part1';"`
 
-
 		### Find the versionID based on Part 2 
 		versionID=`sqlite3 $DBName "SELECT versionID FROM version WHERE appID =$appID and build_number=$part2;"`
 
@@ -73,7 +72,7 @@
 		javac dk/*.java; java -classpath ".:sqlite-jdbc-3.7.2.jar" dk/manifestParser_Individual $DBName $decompile_output $appID $versionID
 
 
-#		cd ../../../
+		cd ../../
 
 
 
@@ -81,7 +80,7 @@
 
 
 		### Clean up everything
-#		rm -rf $decompile_output/*
+		#rm -rf $decompile_output/*
 
 	done
 	
